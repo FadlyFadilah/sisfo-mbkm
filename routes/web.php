@@ -1,0 +1,91 @@
+<?php
+
+use App\Http\Controllers\Admin\RekapitulasiDataController;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
+
+Route::redirect('/', '/login');
+Route::get('/home', function () {
+    if (session('status')) {
+        return redirect()->route('admin.home')->with('status', session('status'));
+    }
+
+    return redirect()->route('admin.home');
+});
+
+Auth::routes();
+
+Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth']], function () {
+    Route::get('/', 'HomeController@index')->name('home');
+    Route::get('/details/{nama}', 'HomeController@detail')->name('home.details');
+    // Permissions
+    Route::delete('permissions/destroy', 'PermissionsController@massDestroy')->name('permissions.massDestroy');
+    Route::resource('permissions', 'PermissionsController');
+
+    // Roles
+    Route::delete('roles/destroy', 'RolesController@massDestroy')->name('roles.massDestroy');
+    Route::resource('roles', 'RolesController');
+
+    // Users
+    Route::delete('users/destroy', 'UsersController@massDestroy')->name('users.massDestroy');
+    Route::resource('users', 'UsersController');
+
+    // Prodi
+    Route::delete('prodis/destroy', 'ProdiController@massDestroy')->name('prodis.massDestroy');
+    Route::resource('prodis', 'ProdiController');
+
+    // Periode
+    Route::delete('periodes/destroy', 'PeriodeController@massDestroy')->name('periodes.massDestroy');
+    Route::resource('periodes', 'PeriodeController');
+
+    // Program
+    Route::delete('programs/destroy', 'ProgramController@massDestroy')->name('programs.massDestroy');
+    Route::resource('programs', 'ProgramController');
+
+    // Mahasiswa
+    Route::delete('mahasiswas/destroy', 'MahasiswaController@massDestroy')->name('mahasiswas.massDestroy');
+    Route::resource('mahasiswas', 'MahasiswaController');
+    Route::post('mahasiswa', 'MahasiswaController@index')->name('mahasiswa.index');
+    // Pengajuan
+    Route::delete('pengajuans/destroy', 'PengajuanController@massDestroy')->name('pengajuans.massDestroy');
+    Route::resource('pengajuans', 'PengajuanController');
+
+    // Laporan
+    Route::delete('laporans/destroy', 'LaporanController@massDestroy')->name('laporans.massDestroy');
+    Route::post('laporans/media', 'LaporanController@storeMedia')->name('laporans.storeMedia');
+    Route::post('laporans/ckmedia', 'LaporanController@storeCKEditorImages')->name('laporans.storeCKEditorImages');
+    Route::resource('laporans', 'LaporanController');
+
+    // Rekapitulasi Data
+    Route::resource('rekapitulasi-datas', 'RekapitulasiDataController');
+    Route::post('export/full', [RekapitulasiDataController::class, 'export'])->name('export.full');
+});
+Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth']], function () {
+    // Change password
+    if (file_exists(app_path('Http/Controllers/Auth/ChangePasswordController.php'))) {
+        Route::get('password', 'ChangePasswordController@edit')->name('password.edit');
+        Route::post('password', 'ChangePasswordController@update')->name('password.update');
+        Route::post('profile', 'ChangePasswordController@updateProfile')->name('password.updateProfile');
+        Route::post('profile/destroy', 'ChangePasswordController@destroy')->name('password.destroyProfile');
+    }
+});
+Route::group(['as' => 'frontend.', 'namespace' => 'Frontend', 'middleware' => ['auth']], function () {
+    Route::get('/home', 'HomeController@index')->name('home');
+
+    // Mahasiswa
+    Route::resource('mahasiswas', 'MahasiswaController');
+
+    // Pengajuan
+    Route::resource('pengajuans', 'PengajuanController');
+
+    // Laporan
+    Route::delete('laporans/destroy', 'LaporanController@massDestroy')->name('laporans.massDestroy');
+    Route::post('laporans/media', 'LaporanController@storeMedia')->name('laporans.storeMedia');
+    Route::post('laporans/ckmedia', 'LaporanController@storeCKEditorImages')->name('laporans.storeCKEditorImages');
+    Route::resource('laporans', 'LaporanController');
+
+    Route::get('frontend/profile', 'ProfileController@index')->name('profile.index');
+    Route::post('frontend/profile', 'ProfileController@update')->name('profile.update');
+    Route::post('frontend/profile/destroy', 'ProfileController@destroy')->name('profile.destroy');
+    Route::post('frontend/profile/password', 'ProfileController@password')->name('profile.password');
+});

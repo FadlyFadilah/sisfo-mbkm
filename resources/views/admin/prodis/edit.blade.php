@@ -1,0 +1,69 @@
+×
+  app
+  config
+  database
+  public
+  resources
+  css
+  js
+  lang
+  views
+  admin
+  laporans
+  mahasiswas
+  pengajuans
+  periodes
+  permissions
+  prodis
+  relationships
+  create.blade.php
+  edit.blade.php
+  index.blade.php
+  show.blade.php
+  programs
+  rekapitulasiDatas
+  roles
+  users
+  auth
+  csvImport
+  layouts
+  partials
+  home.blade.php
+  welcome.blade.php
+  routes
+  tests
+  composer.json
+  package.json
+  vite.config.js
+@extends('layouts.admin')
+@section('content')
+
+<div class="card">
+    <div class="card-header">
+        {{ trans('global.edit') }} {{ trans('cruds.prodi.title_singular') }}
+    </div>
+
+    <div class="card-body">
+        <form method="POST" action="{{ route("admin.prodis.update", [$prodi->id]) }}" enctype="multipart/form-data">
+            @method('PUT')
+            @csrf
+            <div class="form-group">
+                <label class="required" for="nama_prodi">{{ trans('cruds.prodi.fields.nama_prodi') }}</label>
+                <input class="form-control {{ $errors->has('nama_prodi') ? 'is-invalid' : '' }}" type="text" name="nama_prodi" id="nama_prodi" value="{{ old('nama_prodi', $prodi->nama_prodi) }}" required>
+                @if($errors->has('nama_prodi'))
+                    <span class="text-danger">{{ $errors->first('nama_prodi') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.prodi.fields.nama_prodi_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <button class="btn btn-danger" type="submit">
+                    {{ trans('global.save') }}
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+@endsection
