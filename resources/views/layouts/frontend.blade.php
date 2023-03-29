@@ -13,7 +13,10 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-
+    <link rel="shortcut icon" href="{{ asset('LOGOTEDC.PNG') }}" type="image/x-icon">
+    
+    <link href="{{ asset('css/adminltev3.css') }}" rel="stylesheet" />
+    <link href="{{ asset('css/adminlte.css') }}" rel="stylesheet" />
     <!-- Styles -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet" />
@@ -38,9 +41,9 @@
 
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-dark shadow-sm" style="background-color: #00d39e;">
+        <nav class="navbar navbar-expand-md shadow-sm text-whitex">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
+                <a class="navbar-brand text-white" href="{{ url('/') }}">
                     SISFO MBKM
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -53,7 +56,7 @@
                         @guest
                         @else
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('frontend.home') }}">
+                                <a class="nav-link text-white" href="{{ route('frontend.home') }}">
                                     {{ __('Dashboard') }}
                                 </a>
                             </li>
@@ -74,7 +77,7 @@
                             @endif
                         @else
                             <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle text-white" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->username }} <span class="caret"></span>
                                 </a>
 

@@ -31,7 +31,17 @@ class LaporanController extends Controller
     {
         abort_if(Gate::denies('laporan_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $pengajuans = Pengajuan::pluck('semester', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $pengajuans = Pengajuan::select('pengajuans.id', 'programs.nama_program')
+            ->join('programs', 'programs.id', '=', 'pengajuans.program_id')
+            ->get()
+            ->map(function ($pengajuan) {
+                return [
+                    'id' => $pengajuan->id,
+                    'text' => $pengajuan->nama_program,
+                ];
+            })
+            ->pluck('text', 'id')
+            ->prepend(trans('global.pleaseSelect'), '');
 
         return view('frontend.laporans.create', compact('pengajuans'));
     }
@@ -71,7 +81,7 @@ class LaporanController extends Controller
         $laporan->update($request->all());
 
         if ($request->input('sertifikat', false)) {
-            if (! $laporan->sertifikat || $request->input('sertifikat') !== $laporan->sertifikat->file_name) {
+            if (!$laporan->sertifikat || $request->input('sertifikat') !== $laporan->sertifikat->file_name) {
                 if ($laporan->sertifikat) {
                     $laporan->sertifikat->delete();
                 }
@@ -82,7 +92,7 @@ class LaporanController extends Controller
         }
 
         if ($request->input('laporan', false)) {
-            if (! $laporan->laporan || $request->input('laporan') !== $laporan->laporan->file_name) {
+            if (!$laporan->laporan || $request->input('laporan') !== $laporan->laporan->file_name) {
                 if ($laporan->laporan) {
                     $laporan->laporan->delete();
                 }

@@ -3,7 +3,7 @@
 return [
     'actions'                        => 'Aksi',
     'add'                            => 'Tambah',
-    'allRightsReserved'              => 'All rights reserved.',
+    'allRightsReserved'              => 'SISFO MBKM.',
     'areYouSure'                     => 'Apakah anda yakin?',
     'clickHereToVerify'              => 'Klik di sini untuk memverifikasi',
     'create'                         => 'Buat',

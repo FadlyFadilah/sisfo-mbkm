@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Maatwebsite\Excel\Facades\Excel;
 use Symfony\Component\HttpFoundation\Response;
+use LaravelDaily\LaravelCharts\Classes\LaravelChart;
 
 class RekapitulasiDataController extends Controller
 {
@@ -23,9 +24,40 @@ class RekapitulasiDataController extends Controller
 
         $programs = Program::pluck('nama_program', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.rekapitulasiDatas.index', compact('prodis', 'periodes', 'programs'));
+        $settings1 = [
+            'chart_title'        => 'Pengajuan Per-Perogram',
+            'chart_type'         => 'bar',
+            'report_type'        => 'group_by_relationship',
+            'model'              => 'App\Models\Pengajuan',
+            'group_by_field'     => 'nama_program',
+            'aggregate_function' => 'count',
+            'filter_field'       => 'created_at',
+            'column_class'       => 'col-md-6',
+            'entries_number'     => '5',
+            'relationship_name'  => 'program',
+            'translation_key'    => 'pengajuan', 
+        ];
+        $chartprogram = new LaravelChart($settings1);
+
+        $settings2 = [
+            'chart_title'        => 'Mahasiswa Per-Prodi',
+            'chart_type'         => 'bar',
+            'report_type'        => 'group_by_relationship',
+            'model'              => 'App\Models\Mahasiswa',
+            'group_by_field'     => 'nama_prodi',
+            'aggregate_function' => 'count',
+            'filter_field'       => 'created_at',
+            'column_class'       => 'col-md-6',
+            'entries_number'     => '5',
+            'relationship_name'  => 'prodi',
+            'translation_key'    => 'mahasiswa',
+        ];
+
+        $chart = new LaravelChart($settings2);
+
+        return view('admin.rekapitulasiDatas.index', compact('programs', 'periodes', 'programs', 'prodis', 'chartprogram', 'chart'));
     }
-    
+
     public function export(Request $request)
     {
         $prodi = $request->input('prodi_id');

@@ -42,6 +42,7 @@ class PengajuanController extends Controller
         $attr = $request->all();
         $mahasiswa = Mahasiswa::where('user_id', auth()->user()->id)->first();
         $attr['mahasiswa_id'] = $mahasiswa->id;
+        $attr['verif'] = "Pending";
 
         $pengajuan = Pengajuan::create($attr);
 

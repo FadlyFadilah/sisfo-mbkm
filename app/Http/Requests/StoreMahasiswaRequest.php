@@ -17,10 +17,6 @@ class StoreMahasiswaRequest extends FormRequest
     public function rules()
     {
         return [
-            'user_id' => [
-                'required',
-                'integer',
-            ],
             'nama_lengkap' => [
                 'string',
                 'required',

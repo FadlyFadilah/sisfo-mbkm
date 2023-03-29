@@ -71,6 +71,15 @@ class PengajuanController extends Controller
         return view('admin.pengajuans.show', compact('pengajuan'));
     }
 
+    public function verif(Request $request, Pengajuan $pengajuan)
+    {
+        $pengajuan->verif = $request->input('verif');
+
+        $pengajuan->save();
+
+        return back();
+    }
+
     public function destroy(Pengajuan $pengajuan)
     {
         abort_if(Gate::denies('pengajuan_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');

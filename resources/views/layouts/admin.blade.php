@@ -9,6 +9,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ trans('panel.site_title') }}</title>
+    <link rel="shortcut icon" href="{{ asset('LOGOTEDC.PNG') }}" type="image/x-icon">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.min.css" rel="stylesheet" />
     <link
@@ -29,7 +30,7 @@
 
 <body class="sidebar-mini layout-fixed" style="height: auto;">
     <div class="wrapper">
-        <nav class="main-header navbar navbar-expand bg-white navbar-light border-bottom">
+        <nav class="main-header navbar navbar-expand navbar-light border-bottom" style="background-color: #ffed23">
             <!-- Left navbar links -->
             <ul class="navbar-nav">
                 <li class="nav-item">
@@ -84,7 +85,7 @@
 
         <footer class="main-footer">
             <div class="float-right d-none d-sm-block">
-                <b>Version</b> 3.0.0-alpha
+                <b>Version</b> 0.1.1
             </div>
             <strong> &copy;</strong> {{ trans('global.allRightsReserved') }}
         </footer>

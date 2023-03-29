@@ -8,15 +8,10 @@
                 </a>
             </div>
         @endcan
-        <div class="col-lg-6">
-            <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modal-default"><i
-                    class="fas fa-calendar"></i>
-                Filter Prodi, Tahun Periode dan Program</button>
-        </div>
     </div>
     <div class="card">
         <div class="card-header">
-            {{ trans('cruds.mahasiswa.title_singular') }} {{ trans('global.list') }}
+            {{ trans('global.list') }}{{ trans('cruds.mahasiswa.title_singular') }} : {{ $nama }}, {{ $prodi }}
         </div>
 
         <div class="card-body">
@@ -109,7 +104,7 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="modal-default">
+    {{-- <div class="modal fade" id="modal-default">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -122,21 +117,21 @@
                     @csrf
                     <div class="modal-body">
                         <label for="prodi">Prodi</label>
-                        <select class="form-control {{ $errors->has('prodi') ? 'is-invalid' : '' }}" name="prodi_id" id="prodi_id" >
+                        <select class="form-control {{ $errors->has('prodi') ? 'is-invalid' : '' }}" name="prodi_id" id="prodi_id" required>
                             @foreach($prodis as $id => $entry)
                                 <option value="{{ $id }}" {{ old('prodi_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
                             @endforeach
                         </select>
                         <br>
                         <label for="tahun_periode">Tahun Periode</label>
-                        <select class="form-control {{ $errors->has('periode') ? 'is-invalid' : '' }}" name="periode_id" id="periode_id" >
+                        <select class="form-control {{ $errors->has('periode') ? 'is-invalid' : '' }}" name="periode_id" id="periode_id" required>
                             @foreach($periodes as $id => $entry)
                                 <option value="{{ $id }}" {{ old('periode_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
                             @endforeach
                         </select>
                         <br>
                         <label for="program">Program</label>
-                        <select class="form-control {{ $errors->has('program') ? 'is-invalid' : '' }}" name="program_id" id="program_id" >
+                        <select class="form-control {{ $errors->has('program') ? 'is-invalid' : '' }}" name="program_id" id="program_id" required>
                             @foreach($programs as $id => $entry)
                                 <option value="{{ $id }}" {{ old('program_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
                             @endforeach
@@ -150,7 +145,7 @@
             <!-- /.modal-content -->
         </div>
         <!-- /.modal-dialog -->
-    </div>
+    </div> --}}
 @endsection
 @section('scripts')
     @parent

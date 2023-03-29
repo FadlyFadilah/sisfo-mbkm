@@ -61,14 +61,6 @@
                 </div>
             </form>
 
-
-            @if(Route::has('password.request'))
-                <p class="mb-1">
-                    <a href="{{ route('password.request') }}">
-                        {{ trans('global.forgot_password') }}
-                    </a>
-                </p>
-            @endif
             <p class="mb-1">
                 <a class="text-center" href="{{ route('register') }}">
                     {{ trans('global.register') }}

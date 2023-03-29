@@ -17,10 +17,6 @@ class StorePengajuanRequest extends FormRequest
     public function rules()
     {
         return [
-            'mahasiswa_id' => [
-                'required',
-                'integer',
-            ],
             'program_id' => [
                 'required',
                 'integer',

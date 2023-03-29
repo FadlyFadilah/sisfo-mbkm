@@ -37,6 +37,12 @@ class TiExport implements FromView, ShouldAutoSize
                 $query->where('id', $program);
             })->get();
             return view('admin.mahasiswas.index', compact('mahasiswas'));
+        } elseif ($this->prodi && $this->program) {
+            $program = $this->program;
+            $mahasiswas = Mahasiswa::with('user')->where('prodi_id', $this->prodi)->whereHas('mahasiswaPengajuans.program', function ($query) use ($program){
+                $query->where('id', $program);
+            })->get();
+            return view('admin.mahasiswas.index', compact('mahasiswas'));
         } elseif ($this->prodi) {
             $mahasiswas = Mahasiswa::with('user')->where('prodi_id', $this->prodi)->get();
             return view('exports.Exports', compact('mahasiswas'));

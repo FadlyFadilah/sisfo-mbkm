@@ -12,6 +12,7 @@ class CreatePengajuansTable extends Migration
             $table->bigIncrements('id');
             $table->integer('semester');
             $table->string('no_hp')->nullable();
+            $table->string('verif')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

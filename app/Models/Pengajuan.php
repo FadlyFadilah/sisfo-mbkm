@@ -24,6 +24,7 @@ class Pengajuan extends Model
         'program_id',
         'semester',
         'no_hp',
+        'verif',
         'created_at',
         'updated_at',
         'deleted_at',

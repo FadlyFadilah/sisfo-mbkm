@@ -38,6 +38,9 @@
                             {{ trans('cruds.pengajuan.fields.no_hp') }}
                         </th>
                         <th>
+                            Verifikasi
+                        </th>
+                        <th>
                             &nbsp;
                         </th>
                     </tr>
@@ -62,6 +65,9 @@
                             </td>
                             <td>
                                 {{ $pengajuan->no_hp ?? '' }}
+                            </td>
+                            <td>
+                                {{ $pengajuan->verif ?? '' }}
                             </td>
                             <td>
                                 @can('pengajuan_show')

@@ -18,6 +18,7 @@ Auth::routes();
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth']], function () {
     Route::get('/', 'HomeController@index')->name('home');
     Route::get('/details/{nama}', 'HomeController@detail')->name('home.details');
+    Route::get('/details/{nama}/{prodi}', 'HomeController@show')->name('home.show');
     // Permissions
     Route::delete('permissions/destroy', 'PermissionsController@massDestroy')->name('permissions.massDestroy');
     Route::resource('permissions', 'PermissionsController');
@@ -48,6 +49,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('mahasiswa', 'MahasiswaController@index')->name('mahasiswa.index');
     // Pengajuan
     Route::delete('pengajuans/destroy', 'PengajuanController@massDestroy')->name('pengajuans.massDestroy');
+    Route::patch('pengajuans/verif/{pengajuan}', 'PengajuanController@verif')->name('pengajuans.verif');
     Route::resource('pengajuans', 'PengajuanController');
 
     // Laporan
