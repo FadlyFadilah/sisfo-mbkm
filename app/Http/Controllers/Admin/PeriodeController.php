@@ -33,7 +33,7 @@ class PeriodeController extends Controller
     {
         $periode = Periode::create($request->all());
 
-        return redirect()->route('admin.periodes.index');
+        return redirect()->route('admin.periodes.index')->with('message', 'Berhasil membuat tahun periode!');
     }
 
     public function edit(Periode $periode)
@@ -47,7 +47,7 @@ class PeriodeController extends Controller
     {
         $periode->update($request->all());
 
-        return redirect()->route('admin.periodes.index');
+        return redirect()->route('admin.periodes.index')->with('message', 'Berhasil mengubah tahun periode!');
     }
 
     public function show(Periode $periode)
@@ -65,7 +65,7 @@ class PeriodeController extends Controller
 
         $periode->delete();
 
-        return back();
+        return back()->with('message', 'Berhasil menghapus tahun periode!');
     }
 
     public function massDestroy(MassDestroyPeriodeRequest $request)

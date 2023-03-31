@@ -33,7 +33,7 @@ class ProdiController extends Controller
     {
         $prodi = Prodi::create($request->all());
 
-        return redirect()->route('admin.prodis.index');
+        return redirect()->route('admin.prodis.index')->with('message', 'Berhasil membuat prodi!');
     }
 
     public function edit(Prodi $prodi)
@@ -47,7 +47,7 @@ class ProdiController extends Controller
     {
         $prodi->update($request->all());
 
-        return redirect()->route('admin.prodis.index');
+        return redirect()->route('admin.prodis.index')->with('message', 'Berhasil mengubah prodi!');
     }
 
     public function show(Prodi $prodi)
@@ -65,7 +65,7 @@ class ProdiController extends Controller
 
         $prodi->delete();
 
-        return back();
+        return back()->with('message', 'Berhasil menghapus prodi!');
     }
 
     public function massDestroy(MassDestroyProdiRequest $request)

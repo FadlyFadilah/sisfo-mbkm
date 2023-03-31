@@ -37,7 +37,7 @@ class RolesController extends Controller
         $role = Role::create($request->all());
         $role->permissions()->sync($request->input('permissions', []));
 
-        return redirect()->route('admin.roles.index');
+        return redirect()->route('admin.roles.index')->with('message', 'Berhasil membuat peranan!');
     }
 
     public function edit(Role $role)
@@ -56,7 +56,7 @@ class RolesController extends Controller
         $role->update($request->all());
         $role->permissions()->sync($request->input('permissions', []));
 
-        return redirect()->route('admin.roles.index');
+        return redirect()->route('admin.roles.index')->with('message', 'Berhasil mengubah peranan!');
     }
 
     public function show(Role $role)
@@ -74,7 +74,7 @@ class RolesController extends Controller
 
         $role->delete();
 
-        return back();
+        return back()->with('message', 'Berhasil menghapus peranan!');
     }
 
     public function massDestroy(MassDestroyRoleRequest $request)

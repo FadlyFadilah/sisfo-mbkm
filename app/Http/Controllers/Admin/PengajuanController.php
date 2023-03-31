@@ -39,7 +39,7 @@ class PengajuanController extends Controller
     {
         $pengajuan = Pengajuan::create($request->all());
 
-        return redirect()->route('admin.pengajuans.index');
+        return redirect()->route('admin.pengajuans.index')->with('message', 'Berhasil membuat pengajuan!');
     }
 
     public function edit(Pengajuan $pengajuan)
@@ -59,7 +59,7 @@ class PengajuanController extends Controller
     {
         $pengajuan->update($request->all());
 
-        return redirect()->route('admin.pengajuans.index');
+        return redirect()->route('admin.pengajuans.index')->with('message', 'Berhasil mengubah pengajuan!');
     }
 
     public function show(Pengajuan $pengajuan)
@@ -77,7 +77,7 @@ class PengajuanController extends Controller
 
         $pengajuan->save();
 
-        return back();
+        return back()->with('message', 'Berhasil menverifikasi pengajuan!');
     }
 
     public function destroy(Pengajuan $pengajuan)
@@ -86,7 +86,7 @@ class PengajuanController extends Controller
 
         $pengajuan->delete();
 
-        return back();
+        return back()->with('message', 'Berhasil menghapus pengajuan!');
     }
 
     public function massDestroy(MassDestroyPengajuanRequest $request)

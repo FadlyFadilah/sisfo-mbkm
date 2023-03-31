@@ -46,7 +46,7 @@ class PengajuanController extends Controller
 
         $pengajuan = Pengajuan::create($attr);
 
-        return redirect()->route('frontend.pengajuans.index');
+        return redirect()->route('frontend.pengajuans.index')->with('message', 'Berhasil membuat pengajuan!');
     }
 
     public function edit(Pengajuan $pengajuan)
@@ -67,7 +67,7 @@ class PengajuanController extends Controller
         $attr['mahasiswa_id'] = $mahasiswa->id;
         $pengajuan->update($attr);
 
-        return redirect()->route('frontend.pengajuans.index');
+        return redirect()->route('frontend.pengajuans.index')->with('message', 'Berhasil mengubah pengajuan!');
     }
 
     public function show(Pengajuan $pengajuan)
@@ -85,7 +85,7 @@ class PengajuanController extends Controller
 
         $pengajuan->delete();
 
-        return back();
+        return back()->with('message', 'Berhasil menghapus pengajuan!');
     }
 
     public function massDestroy(MassDestroyPengajuanRequest $request)

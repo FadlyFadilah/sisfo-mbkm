@@ -52,7 +52,7 @@ class LaporanController extends Controller
             Media::whereIn('id', $media)->update(['model_id' => $laporan->id]);
         }
 
-        return redirect()->route('admin.laporans.index');
+        return redirect()->route('admin.laporans.index')->with('message', 'Berhasil membuat laporan mbkm mahasiswa!');
     }
 
     public function edit(Laporan $laporan)
@@ -92,7 +92,7 @@ class LaporanController extends Controller
             $laporan->sertifikat->delete();
         }
 
-        return redirect()->route('admin.laporans.index');
+        return redirect()->route('admin.laporans.index')->with('message', 'Berhasil mengubah laporan mbkm mahasiswa!');
     }
 
     public function show(Laporan $laporan)
@@ -110,7 +110,7 @@ class LaporanController extends Controller
 
         $laporan->delete();
 
-        return back();
+        return back()->with('message', 'Berhasil menghapus laporan mbkm mahasiswa!');
     }
 
     public function massDestroy(MassDestroyLaporanRequest $request)

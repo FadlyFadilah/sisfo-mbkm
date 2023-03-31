@@ -33,7 +33,7 @@ class ProgramController extends Controller
     {
         $program = Program::create($request->all());
 
-        return redirect()->route('admin.programs.index');
+        return redirect()->route('admin.programs.index')->with('message', 'Berhasil membuat program!');
     }
 
     public function edit(Program $program)
@@ -47,7 +47,7 @@ class ProgramController extends Controller
     {
         $program->update($request->all());
 
-        return redirect()->route('admin.programs.index');
+        return redirect()->route('admin.programs.index')->with('message', 'Berhasil mengubah program!');
     }
 
     public function show(Program $program)
@@ -65,7 +65,7 @@ class ProgramController extends Controller
 
         $program->delete();
 
-        return back();
+        return back()->with('message', 'Berhasil menghapus program!');
     }
 
     public function massDestroy(MassDestroyProgramRequest $request)

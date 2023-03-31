@@ -33,7 +33,7 @@ class PermissionsController extends Controller
     {
         $permission = Permission::create($request->all());
 
-        return redirect()->route('admin.permissions.index');
+        return redirect()->route('admin.permissions.index')->with('message', 'Berhasil membuat izin!');
     }
 
     public function edit(Permission $permission)
@@ -47,7 +47,7 @@ class PermissionsController extends Controller
     {
         $permission->update($request->all());
 
-        return redirect()->route('admin.permissions.index');
+        return redirect()->route('admin.permissions.index')->with('message', 'Berhasil mengubah izin!');
     }
 
     public function show(Permission $permission)
@@ -63,7 +63,7 @@ class PermissionsController extends Controller
 
         $permission->delete();
 
-        return back();
+        return back()->with('message', 'Berhasil menghapus izin!');
     }
 
     public function massDestroy(MassDestroyPermissionRequest $request)

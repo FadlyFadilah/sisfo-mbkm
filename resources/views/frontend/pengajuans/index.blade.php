@@ -82,33 +82,54 @@
                                                 @endcan
 
                                                 @can('pengajuan_delete')
-                                                    <form action="{{ route('frontend.pengajuans.destroy', $pengajuan->id) }}"
-                                                        method="POST"
-                                                        onsubmit="return confirm('{{ trans('global.areYouSure') }}');"
-                                                        style="display: inline-block;">
+                                                    <form id="delete-form-{{ $pengajuan->id }}"
+                                                        action="{{ route('admin.pengajuans.destroy', $pengajuan->id) }}"
+                                                        method="POST" style="display: inline-block;">
                                                         <input type="hidden" name="_method" value="DELETE">
                                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                                        <input type="submit" class="btn btn-xs btn-danger"
-                                                            value="{{ trans('global.delete') }}">
+                                                        <button type="button" class="btn btn-xs btn-danger"
+                                                            onclick="deletePengajuan({{ $pengajuan->id }})">
+                                                            {{ trans('global.delete') }}
+                                                        </button>
                                                     </form>
-                                                @endcan
 
-                                            </td>
+                                                </td>
 
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
-                </div>
 
+                </div>
             </div>
         </div>
-    </div>
-@endsection
+    @endsection
 @section('scripts')
     @parent
+    <script>
+        function deletePengajuan(pengajuanId) {
+            Swal.fire({
+                title: 'Apakah anda yakin?',
+                text: "data tidak akan bisa di kembalikan!",
+                icon: 'warning',
+                confirmButtonText: 'Iya, hapus!',
+                showDenyButton: true,
+                denyButtonText: `Tidak, batal!`,
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // jika pengguna menekan tombol "Yes, delete it!", submit form
+                    document.getElementById('delete-form-' + pengajuanId).submit();
+                    Swal.fire('Tersimpan!', '', 'success')
+                } else if (result.isDenied) {
+                    Swal.fire('Perubahan tidak di simpan', '', 'info')
+                }
+            });
+        }
+    </script>
     <script>
         $(function() {
             let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)

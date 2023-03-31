@@ -82,7 +82,7 @@ class MahasiswaController extends Controller
     {
         $mahasiswa = Mahasiswa::create($request->all());
 
-        return redirect()->route('admin.mahasiswas.index');
+        return redirect()->route('admin.mahasiswas.index')->with('message', 'Berhasil membuat data mahasiswa!');
     }
 
     public function edit(Mahasiswa $mahasiswa)
@@ -104,7 +104,7 @@ class MahasiswaController extends Controller
     {
         $mahasiswa->update($request->all());
 
-        return redirect()->route('admin.mahasiswas.index');
+        return redirect()->route('admin.mahasiswas.index')->with('message', 'Berhasil mengubah data mahasiswa!');
     }
 
     public function show(Mahasiswa $mahasiswa)
@@ -122,7 +122,7 @@ class MahasiswaController extends Controller
 
         $mahasiswa->delete();
 
-        return back();
+        return back()->with('message', 'Berhasil menghapus data mahasiswa!');
     }
 
     public function massDestroy(MassDestroyMahasiswaRequest $request)
