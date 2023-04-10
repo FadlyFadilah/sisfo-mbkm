@@ -62,6 +62,11 @@
                                 </a>
                             </li>
                         @endguest
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="{{ route('frontend.program') }}">
+                                Program MBKM
+                            </a>
+                        </li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->

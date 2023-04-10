@@ -33,6 +33,7 @@ class LaporanController extends Controller
 
         $pengajuans = Pengajuan::select('pengajuans.id', 'programs.nama_program')
             ->join('programs', 'programs.id', '=', 'pengajuans.program_id')
+            ->where('pengajuans.verif', 'Verifikasi')
             ->get()
             ->map(function ($pengajuan) {
                 return [
@@ -69,7 +70,18 @@ class LaporanController extends Controller
     {
         abort_if(Gate::denies('laporan_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $pengajuans = Pengajuan::pluck('semester', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $pengajuans = Pengajuan::select('pengajuans.id', 'programs.nama_program')
+            ->join('programs', 'programs.id', '=', 'pengajuans.program_id')
+            ->where('pengajuans.verif', 'Verifikasi')
+            ->get()
+            ->map(function ($pengajuan) {
+                return [
+                    'id' => $pengajuan->id,
+                    'text' => $pengajuan->nama_program,
+                ];
+            })
+            ->pluck('text', 'id')
+            ->prepend(trans('global.pleaseSelect'), '');
 
         $laporan->load('pengajuan');
 

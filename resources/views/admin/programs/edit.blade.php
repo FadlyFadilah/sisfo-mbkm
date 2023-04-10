@@ -19,6 +19,13 @@
                 <span class="help-block">{{ trans('cruds.program.fields.nama_program_helper') }}</span>
             </div>
             <div class="form-group">
+                <label for="desc">Deskripsi Program</label>
+                <textarea class="form-control {{ $errors->has('desc') ? 'is-invalid' : '' }}" name="desc" id="desc">{{ old('desc', $program->desc) }}</textarea>
+                @if($errors->has('desc'))
+                    <span class="text-danger">{{ $errors->first('desc') }}</span>
+                @endif
+            </div>
+            <div class="form-group">
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}
                 </button>

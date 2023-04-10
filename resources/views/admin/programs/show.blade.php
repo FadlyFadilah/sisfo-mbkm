@@ -31,6 +31,14 @@
                             {{ $program->nama_program }}
                         </td>
                     </tr>
+                    <tr>
+                        <th>
+                            Deskripsi Program
+                        </th>
+                        <td>
+                            {{ $program->desc }}
+                        </td>
+                    </tr>
                 </tbody>
             </table>
             <div class="form-group">

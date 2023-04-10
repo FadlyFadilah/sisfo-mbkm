@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\RekapitulasiDataController;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -12,10 +13,19 @@ Route::get('/home', function () {
 
     return redirect()->route('admin.home');
 });
+Route::get('/migrate', function () {
+    Artisan::call('migrate');
+    return 'migrated!';
+});
+Route::get('/seed', function () {
+    Artisan::call('db:seed');
+    return 'seeded!';
+});
 
 Auth::routes();
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth']], function () {
+    
     Route::get('/', 'HomeController@index')->name('home');
     Route::get('/details/{nama}', 'HomeController@detail')->name('home.details');
     Route::get('/details/{nama}/{prodi}', 'HomeController@show')->name('home.show');
@@ -73,6 +83,7 @@ Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 
 });
 Route::group(['as' => 'frontend.', 'namespace' => 'Frontend', 'middleware' => ['auth']], function () {
     Route::get('/home', 'HomeController@index')->name('home');
+    Route::get('/program', 'HomeController@show')->name('program');
 
     // Mahasiswa
     Route::resource('mahasiswas', 'MahasiswaController');

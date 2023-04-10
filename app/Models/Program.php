@@ -21,6 +21,7 @@ class Program extends Model
 
     protected $fillable = [
         'nama_program',
+        'desc',
         'created_at',
         'updated_at',
         'deleted_at',

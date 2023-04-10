@@ -92,21 +92,21 @@
                                                             {{ trans('global.delete') }}
                                                         </button>
                                                     </form>
+                                                @endcan
+                                            </td>
 
-                                                </td>
-
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
                         </div>
                     </div>
-
                 </div>
+
             </div>
         </div>
-    @endsection
+    </div>
+@endsection
 @section('scripts')
     @parent
     <script>

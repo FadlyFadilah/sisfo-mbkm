@@ -29,6 +29,9 @@
                                 {{ trans('cruds.program.fields.nama_program') }}
                             </th>
                             <th>
+                                Deskripsi program
+                            </th>
+                            <th>
                                 &nbsp;
                             </th>
                         </tr>
@@ -44,6 +47,9 @@
                                 </td>
                                 <td>
                                     {{ $program->nama_program ?? '' }}
+                                </td>
+                                <td>
+                                    {{ $program->desc ?? '' }}
                                 </td>
                                 <td>
                                     @can('program_show')
