@@ -71,7 +71,7 @@
         Dropzone.options.sertifikatDropzone = {
             url: '{{ route('frontend.laporans.storeMedia') }}',
             maxFilesize: 2, // MB
-            acceptedFiles: '.pdf.,docx,.doc',
+            acceptedFiles: '.pdf,.docx,.doc',
             maxFiles: 1,
             addRemoveLinks: true,
             headers: {
@@ -122,7 +122,7 @@
         Dropzone.options.laporanDropzone = {
             url: '{{ route('frontend.laporans.storeMedia') }}',
             maxFilesize: 2, // MB
-            acceptedFiles: '.pdf',
+            acceptedFiles: '.pdf,.docx,.doc',
             maxFiles: 1,
             addRemoveLinks: true,
             headers: {

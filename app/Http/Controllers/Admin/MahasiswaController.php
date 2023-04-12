@@ -30,37 +30,19 @@ class MahasiswaController extends Controller
         $prodi = $request['prodi_id'];
         $tahun = $request['periode_id'];
         $program = $request['program_id'];
-        if ($prodi && $tahun && $program) {
-            $mahasiswas = Mahasiswa::with('user')->where('prodi_id', $prodi)->where('periode_id', $tahun)->whereHas('mahasiswaPengajuans.program', function ($query) use ($program) {
-                $query->where('id', $program);
-            })->get();
-            return view('admin.mahasiswas.index', compact('mahasiswas', 'prodis', 'periodes', 'programs'));
-        } elseif ($prodi && $tahun) {
-            $mahasiswas = Mahasiswa::with('user')->where('prodi_id', $prodi)->where('periode_id', $tahun)->get();
-            return view('admin.mahasiswas.index', compact('mahasiswas', 'prodis', 'periodes', 'programs'));
-        } elseif ($tahun && $program) {
-            $mahasiswas = Mahasiswa::with('user')->where('periode_id', $tahun)->whereHas('mahasiswaPengajuans.program', function ($query) use ($program) {
-                $query->where('id', $program);
-            })->get();
-            return view('admin.mahasiswas.index', compact('mahasiswas', 'prodis', 'periodes', 'programs'));
-        } elseif ($prodi && $program) {
-            $mahasiswas = Mahasiswa::with('user')->where('prodi_id', $prodi)->whereHas('mahasiswaPengajuans.program', function ($query) use ($program) {
-                $query->where('id', $program);
-            })->get();
-            return view('admin.mahasiswas.index', compact('mahasiswas', 'prodis', 'periodes', 'programs'));
-        } elseif ($prodi) {
-            $mahasiswas = Mahasiswa::with('user')->where('prodi_id', $prodi)->get();
-            return view('admin.mahasiswas.index', compact('mahasiswas', 'prodis', 'periodes', 'programs'));
-        } elseif ($tahun) {
-            $mahasiswas = Mahasiswa::with('user')->where('periode_id', $tahun)->get();
-            return view('admin.mahasiswas.index', compact('mahasiswas', 'prodis', 'periodes', 'programs'));
-        } elseif ($program) {
-            $mahasiswas = Mahasiswa::with('user', 'mahasiswaPengajuans.program')->whereHas('mahasiswaPengajuans.program', function ($query) use ($program) {
-                $query->where('id', $program);
-            })->get();
-            return view('admin.mahasiswas.index', compact('mahasiswas', 'prodis', 'periodes', 'programs'));
-        }
-        $mahasiswas = Mahasiswa::with(['user', 'prodi', 'periode'])->get();
+        $mahasiswas = Mahasiswa::with(['user', 'prodi', 'periode', 'mahasiswaPengajuans.program'])
+            ->when($prodi, function ($query, $prodi) {
+                return $query->where('prodi_id', $prodi);
+            })
+            ->when($tahun, function ($query, $tahun) {
+                return $query->where('periode_id', $tahun);
+            })
+            ->when($program, function ($query, $program) {
+                return $query->whereHas('mahasiswaPengajuans.program', function ($query) use ($program) {
+                    $query->where('id', $program);
+                });
+            })
+            ->get();
 
         return view('admin.mahasiswas.index', compact('mahasiswas', 'prodis', 'periodes', 'programs'));
     }

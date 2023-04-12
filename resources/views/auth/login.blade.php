@@ -4,7 +4,7 @@
     <div class="login-logo">
         <div class="login-logo">
             <a href="{{ route('admin.home') }}">
-                {{ trans('panel.site_title') }}
+                Sifo MBKM Politeknik TEDC Bandung
             </a>
         </div>
     </div>

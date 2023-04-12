@@ -32,7 +32,7 @@ class HomeController
         $prodii = Prodi::where('nama_prodi', $prodi)->first();
         $prodi_id = $prodii->id;
         $program_id = $programm->id;
-        $mahasiswas = Mahasiswa::with('user')->where('prodi_id', $prodi_id)->whereHas('mahasiswaPengajuans.program', function ($query) use ($program_id) {
+        $mahasiswas = Mahasiswa::with('user', 'periode', 'prodi')->where('prodi_id', $prodi_id)->whereHas('mahasiswaPengajuans.program', function ($query) use ($program_id) {
             $query->where('id', $program_id);
         })->get();
         return view('show', compact('mahasiswas', 'nama', 'prodi'));

@@ -22,41 +22,19 @@ class TiExport implements FromView, ShouldAutoSize
     }
     public function view(): View
     {
-        if ($this->prodi && $this->tahun && $this->program) {
-            $program = $this->program;
-            $mahasiswas = Mahasiswa::with('user')->where('prodi_id', $this->prodi)->where('periode_id', $this->tahun)->whereHas('mahasiswaPengajuans.program', function ($query) use ($program) {
-                $query->where('id', $program);
-            })->get();
-            return view('exports.Exports', compact('mahasiswas'));
-        } elseif ($this->prodi && $this->tahun) {
-            $mahasiswas = Mahasiswa::with('user')->where('prodi_id', $this->prodi)->where('periode_id', $this->tahun)->get();
-            return view('admin.mahasiswas.index', compact('mahasiswas'));
-        } elseif ($this->tahun && $this->program) {
-            $program = $this->program;
-            $mahasiswas = Mahasiswa::with('user')->where('periode_id', $this->tahun)->whereHas('mahasiswaPengajuans.program', function ($query) use ($program){
-                $query->where('id', $program);
-            })->get();
-            return view('admin.mahasiswas.index', compact('mahasiswas'));
-        } elseif ($this->prodi && $this->program) {
-            $program = $this->program;
-            $mahasiswas = Mahasiswa::with('user')->where('prodi_id', $this->prodi)->whereHas('mahasiswaPengajuans.program', function ($query) use ($program){
-                $query->where('id', $program);
-            })->get();
-            return view('admin.mahasiswas.index', compact('mahasiswas'));
-        } elseif ($this->prodi) {
-            $mahasiswas = Mahasiswa::with('user')->where('prodi_id', $this->prodi)->get();
-            return view('exports.Exports', compact('mahasiswas'));
-        } elseif ($this->tahun) {
-            $mahasiswas = Mahasiswa::with('user')->where('periode_id', $this->tahun)->get();
-            return view('exports.Exports', compact('mahasiswas'));
-        } elseif ($this->program) {
-            $program = $this->program;
-            $mahasiswas = Mahasiswa::with('user', 'mahasiswaPengajuans.program')->whereHas('mahasiswaPengajuans.program', function ($query) use ($program) {
-                $query->where('id', $program);
-            })->get();
-            return view('exports.Exports', compact('mahasiswas'));
-        }
-        $mahasiswas = Mahasiswa::with('mahasiswaPengajuans')->get();
+        $mahasiswas = Mahasiswa::with('user', 'mahasiswaPengajuans.program')
+            ->when($this->prodi, function ($query) {
+                return $query->where('prodi_id', $this->prodi);
+            })
+            ->when($this->tahun, function ($query) {
+                return $query->where('periode_id', $this->tahun);
+            })
+            ->when($this->program, function ($query) {
+                return $query->whereHas('mahasiswaPengajuans.program', function ($q) {
+                    $q->where('id', $this->program);
+                });
+            })
+            ->get();
         return view('exports.Exports', compact('mahasiswas'));
     }
 
