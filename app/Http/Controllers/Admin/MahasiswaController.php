@@ -71,7 +71,7 @@ class MahasiswaController extends Controller
     {
         abort_if(Gate::denies('mahasiswa_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $users = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $users = User::pluck('username', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $prodis = Prodi::pluck('nama_prodi', 'id')->prepend(trans('global.pleaseSelect'), '');
 

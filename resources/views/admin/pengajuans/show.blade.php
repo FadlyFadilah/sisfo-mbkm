@@ -66,23 +66,6 @@
                                 <i class="fa-2x fas fa-times text-danger"></i>
                                 @endif
                             </td>
-                            <td>
-                                <form action="{{ route('admin.pengajuans.verif', $pengajuan->id) }}" method="post">
-                                    @csrf
-                                    @method('PATCH')
-                                    <div class="form-group">
-                                        <label for="verif">Verifikasi</label>
-                                        <select class="form-control {{ $errors->has('verif') ? 'is-invalid' : '' }}"
-                                            name="verif" id="verif">
-                                            <option hidden selected>Silihkan Pilih!</option>
-                                            <option value="Verifikasi">Verifikasi</option>
-                                            <option value="Tolak">Tolak</option>
-                                        </select>
-                                        <br>
-                                        <input type="submit" class="btn btn-success" value="simpan">
-                                    </div>
-                                </form>
-                            </td>
                         </tr>
                     </tbody>
                 </table>
