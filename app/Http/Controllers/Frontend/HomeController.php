@@ -2,19 +2,35 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\Models\Mahasiswa;
+use App\Models\Pengajuan;
 use App\Models\Program;
+use Illuminate\Support\Facades\DB;
 
 class HomeController
 {
     public function index()
     {
-        return view('frontend.home');
+        $programs = Program::select('nama_program', 'desc')->get();
+        return view('frontend.home', compact('programs'));
     }
 
-    public function show()
+    public function chart()
     {
-        $programs = Program::select('nama_program', 'desc')->get();
+        $id = Mahasiswa::where('user_id', auth()->id())->first();
+        $pengajuanData = Pengajuan::select('verif', DB::raw('count(*) as total'))
+            ->where('mahasiswa_id', $id->id)
+            ->groupBy('verif')
+            ->get();
 
-        return view('frontend.program', compact('programs'));
+        $chartData = [];
+        foreach ($pengajuanData as $data) {
+            $chartData[] = [
+                'label' => $data->verif,
+                'value' => $data->total
+            ];
+        }
+
+        return response()->json($chartData);
     }
 }

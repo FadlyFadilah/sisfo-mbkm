@@ -37,13 +37,16 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @php
+                            $no = 1;
+                        @endphp
                         @foreach ($programs as $key => $program)
                             <tr data-entry-id="{{ $program->id }}">
                                 <td>
 
                                 </td>
                                 <td>
-                                    {{ $program->id ?? '' }}
+                                    {{ $no++ }}
                                 </td>
                                 <td>
                                     {{ $program->nama_program ?? '' }}

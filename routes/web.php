@@ -31,6 +31,7 @@ Auth::routes();
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth']], function () {
     
     Route::get('/', 'HomeController@index')->name('home');
+    Route::get('/chart', 'HomeController@chart')->name('chart');
     Route::get('/details/{nama}', 'HomeController@detail')->name('home.details');
     Route::get('/details/{nama}/{prodi}', 'HomeController@show')->name('home.show');
     // Permissions
@@ -56,7 +57,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     // Program
     Route::delete('programs/destroy', 'ProgramController@massDestroy')->name('programs.massDestroy');
     Route::resource('programs', 'ProgramController');
-
+    
     // Mahasiswa
     Route::delete('mahasiswas/destroy', 'MahasiswaController@massDestroy')->name('mahasiswas.massDestroy');
     Route::resource('mahasiswas', 'MahasiswaController');
@@ -65,7 +66,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::delete('pengajuans/destroy', 'PengajuanController@massDestroy')->name('pengajuans.massDestroy');
     Route::patch('pengajuans/verif/{pengajuan}', 'PengajuanController@verif')->name('pengajuans.verif');
     Route::resource('pengajuans', 'PengajuanController');
-
+    
     // Laporan
     Route::delete('laporans/destroy', 'LaporanController@massDestroy')->name('laporans.massDestroy');
     Route::post('laporans/media', 'LaporanController@storeMedia')->name('laporans.storeMedia');
@@ -86,8 +87,13 @@ Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 
     }
 });
 Route::group(['as' => 'frontend.', 'namespace' => 'Frontend', 'middleware' => ['auth']], function () {
+    
+    Route::get('password', 'ChangePasswordUserController@edit')->name('password.edit');
+    Route::post('password', 'ChangePasswordUserController@update')->name('password.update');
+    Route::post('profile', 'ChangePasswordUserController@updateProfile')->name('password.updateProfile');
+    Route::post('profile/destroy', 'ChangePasswordUserController@destroy')->name('password.destroyProfile');
     Route::get('/home', 'HomeController@index')->name('home');
-    Route::get('/program', 'HomeController@show')->name('program');
+    Route::get('/chart', 'HomeController@Chart');
 
     // Mahasiswa
     Route::resource('mahasiswas', 'MahasiswaController');

@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Mahasiswa;
+use App\Models\Pengajuan;
 use App\Models\Prodi;
 use App\Models\Program;
+use Illuminate\Support\Facades\DB;
 
 class HomeController
 {
@@ -13,6 +15,24 @@ class HomeController
         $programs = Program::withCount('programPengajuans')->get();
         return view('home', compact('programs'));
     }
+
+    public function chart()
+    {
+        $pengajuanData = Pengajuan::select('verif', DB::raw('count(*) as total'))
+            ->groupBy('verif')
+            ->get();
+
+        $chartData = [];
+        foreach ($pengajuanData as $data) {
+            $chartData[] = [
+                'label' => $data->verif,
+                'value' => $data->total
+            ];
+        }
+
+        return response()->json($chartData);
+    }
+    
     public function detail($nama)
     {
         $program = Program::where('nama_program', $nama)->first();

@@ -40,10 +40,13 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @php
+                                        $no = 1;
+                                    @endphp
                                     @foreach ($laporans as $key => $laporan)
                                         <tr data-entry-id="{{ $laporan->id }}">
                                             <td>
-                                                {{ $laporan->id ?? '' }}
+                                                {{ $no++ }}
                                             </td>
                                             <td>
                                                 {{ $laporan->pengajuan->semester ?? '' }}

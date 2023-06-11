@@ -9,7 +9,7 @@ return [
         'title'          => 'Izin',
         'title_singular' => 'Izin',
         'fields'         => [
-            'id'                => 'ID',
+            'id'                => 'No',
             'id_helper'         => ' ',
             'title'             => 'Title',
             'title_helper'      => ' ',
@@ -25,7 +25,7 @@ return [
         'title'          => 'Peranan',
         'title_singular' => 'Peranan',
         'fields'         => [
-            'id'                 => 'ID',
+            'id'                 => 'No',
             'id_helper'          => ' ',
             'title'              => 'Title',
             'title_helper'       => ' ',
@@ -43,7 +43,7 @@ return [
         'title'          => 'Daftar Pengguna',
         'title_singular' => 'User',
         'fields'         => [
-            'id'                       => 'ID',
+            'id'                       => 'No',
             'id_helper'                => ' ',
             'name'                     => 'Name',
             'name_helper'              => ' ',
@@ -69,7 +69,7 @@ return [
         'title'          => 'Program Studi',
         'title_singular' => 'Program Studi',
         'fields'         => [
-            'id'                => 'ID',
+            'id'                => 'No',
             'id_helper'         => ' ',
             'nama_prodi'        => 'Nama Program Studi',
             'nama_prodi_helper' => ' ',
@@ -85,7 +85,7 @@ return [
         'title'          => 'Tahun Periode',
         'title_singular' => 'Tahun Periode',
         'fields'         => [
-            'id'                   => 'ID',
+            'id'                   => 'No',
             'id_helper'            => ' ',
             'tahun_periode'        => 'Tahun Periode',
             'tahun_periode_helper' => ' ',
@@ -101,7 +101,7 @@ return [
         'title'          => 'Program',
         'title_singular' => 'Program',
         'fields'         => [
-            'id'                  => 'ID',
+            'id'                  => 'No',
             'id_helper'           => ' ',
             'nama_program'        => 'Nama Program',
             'nama_program_helper' => ' ',
@@ -121,7 +121,7 @@ return [
         'title'          => 'Mahasiswa',
         'title_singular' => 'Mahasiswa',
         'fields'         => [
-            'id'                   => 'ID',
+            'id'                   => 'No',
             'id_helper'            => ' ',
             'user'                 => 'User',
             'user_helper'          => ' ',
@@ -149,7 +149,7 @@ return [
         'title'          => 'Pengajuan',
         'title_singular' => 'Pengajuan',
         'fields'         => [
-            'id'                => 'ID',
+            'id'                => 'No',
             'id_helper'         => ' ',
             'mahasiswa'         => 'Mahasiswa',
             'mahasiswa_helper'  => ' ',
@@ -171,7 +171,7 @@ return [
         'title'          => 'Laporan',
         'title_singular' => 'Laporan',
         'fields'         => [
-            'id'                => 'ID',
+            'id'                => 'No',
             'id_helper'         => ' ',
             'pengajuan'         => 'Pengajuan',
             'pengajuan_helper'  => ' ',

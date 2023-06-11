@@ -1,11 +1,15 @@
 @extends('layouts.frontend')
-
+@section('styles')
+    <link rel="stylesheet" href="{{ asset('css/morris.css') }}">
+@endsection
 @section('content')
-    <div class="container h-auto">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card text-white bg-olive">
-                    <div class="card-header">{{ __('Dashboard') }}</div>
+    <div class="content">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card bg-navy">
+                    <div class="card-header">
+                        Dashboard
+                    </div>
 
                     <div class="card-body">
                         @if (session('status'))
@@ -14,19 +18,70 @@
                             </div>
                         @endif
 
-                        SELAMAT DATANG DI SISTEM INFORMASI MERDEKA BELAJAR KAMPUS MERDEKA POLITEKNIK TEDC
-                    </div>
-                    <div class="card-body">
-                        Langkah - Langkah Penggunaan </br>
-                        1. Klik Menu di kanan atas </br>
-                        2. Isi menu Mahasiswa </br>
-                        3. Lalu kalian bisa mengajukan surat rekomendasi </br>
-                        4. Jika sudah melakukan kegiatan MBKM kalian bisa mengupload laporan dan sertifikat di menu laporan
-                        </br>
-
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="card bg-white">
+                                    <div class="card-header">
+                                        Pengajuan
+                                    </div>
+                                    <div class="card-body">
+                                        <div id="chart-container"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6"></div>
+                            @foreach ($programs as $item)
+                                @php
+                                    $colors = ['bg-info', 'bg-success', 'bg-warning', 'bg-danger', 'bg-indigo', 'bg-purple', 'bg-lime', 'bg-olive'];
+                                    $randomIndex = array_rand($colors);
+                                    $randomColor = $colors[$randomIndex];
+                                @endphp
+                                <div class="col-lg-3 col-xs-6">
+                                    <!-- small box -->
+                                    <div class="small-box {{ $randomColor }}">
+                                        <div class="inner">
+                                            <h5>{{ $item->nama_program }}</p>
+                                            <p>{{ $item->desc }}</p>
+                                        </div>
+                                        <div class="icon">
+                                            <i class="ion ion-pie-graph"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+@endsection
+@section('scripts')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.3.0/raphael.min.js"></script>
+    <script src="{{ asset('js/morris.js') }}"></script>
+    <script src="{{ asset('js/morris.min.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            $.ajax({
+                url: '/chart',
+                type: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    if (data.length > 0) {
+                        Morris.Donut({
+                            element: 'chart-container',
+                            data: data,
+                            colors: ['#ffc107', '#007bff', '#dc3545']
+                        });
+                    } else {
+                        $('#chart-container').text('Data tidak tersedia');
+                    }
+                },
+                error: function(xhr, textStatus, errorThrown) {
+                    console.log(xhr.responseText);
+                }
+            });
+        });
+    </script>
+    @parent
 @endsection

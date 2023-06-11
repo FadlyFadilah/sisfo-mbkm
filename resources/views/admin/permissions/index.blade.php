@@ -34,13 +34,16 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @php
+                            $no = 1;
+                        @endphp
                         @foreach ($permissions as $key => $permission)
                             <tr data-entry-id="{{ $permission->id }}">
                                 <td>
-
+                                    
                                 </td>
                                 <td>
-                                    {{ $permission->id ?? '' }}
+                                    {{ $no++ }}
                                 </td>
                                 <td>
                                     {{ $permission->title ?? '' }}

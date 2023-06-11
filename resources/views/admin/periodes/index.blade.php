@@ -34,13 +34,16 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @php
+                            $no = 1;
+                        @endphp
                         @foreach ($periodes as $key => $periode)
                             <tr data-entry-id="{{ $periode->id }}">
                                 <td>
 
                                 </td>
                                 <td>
-                                    {{ $periode->id ?? '' }}
+                                    {{ $no++ }}
                                 </td>
                                 <td>
                                     {{ $periode->tahun_periode ?? '' }}

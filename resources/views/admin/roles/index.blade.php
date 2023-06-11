@@ -37,13 +37,16 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @php
+                            $no = 1;
+                        @endphp
                         @foreach ($roles as $key => $role)
                             <tr data-entry-id="{{ $role->id }}">
                                 <td>
 
                                 </td>
                                 <td>
-                                    {{ $role->id ?? '' }}
+                                    {{ $no++ }}
                                 </td>
                                 <td>
                                     {{ $role->title ?? '' }}

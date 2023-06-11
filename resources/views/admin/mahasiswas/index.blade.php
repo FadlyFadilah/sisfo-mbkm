@@ -51,13 +51,16 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @php
+                            $no = 1;
+                        @endphp
                         @foreach ($mahasiswas as $key => $mahasiswa)
                             <tr data-entry-id="{{ $mahasiswa->id }}">
                                 <td>
 
                                 </td>
                                 <td>
-                                    {{ $mahasiswa->id ?? '' }}
+                                    {{ $no++ }}
                                 </td>
                                 <td>
                                     {{ $mahasiswa->nama_lengkap ?? '' }}
