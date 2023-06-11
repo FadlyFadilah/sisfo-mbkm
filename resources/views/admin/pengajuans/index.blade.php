@@ -70,6 +70,30 @@
                                     {{ $pengajuan->verif ?? '' }}
                                 </td>
                                 <td>
+                                    <form id="verif-form-{{ $pengajuan->id }}"
+                                        action="{{ route('admin.pengajuans.verif', $pengajuan->id) }}" method="POST"
+                                        style="display: inline-block;">
+                                        <input type="hidden" name="_method" value="PATCH">
+                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                        <input type="hidden" name="verif" value="Verifikasi">
+                                        <button type="button" class="btn btn-xs btn-success"
+                                            onclick="pengajuanVerif({{ $pengajuan->id }})">
+                                            Verif
+                                        </button>
+                                    </form>
+
+                                    <form id="tolak-form-{{ $pengajuan->id }}"
+                                        action="{{ route('admin.pengajuans.verif', $pengajuan->id) }}" method="POST"
+                                        style="display: inline-block;">
+                                        <input type="hidden" name="_method" value="PATCH">
+                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                        <input type="hidden" name="verif" value="Tolak">
+                                        <button type="button" class="btn btn-xs btn-warning"
+                                            onclick="pengajuanTolak({{ $pengajuan->id }})">
+                                            Tolak
+                                        </button>
+                                    </form>
+
                                     @can('pengajuan_show')
                                         <a class="btn btn-xs btn-primary"
                                             href="{{ route('admin.pengajuans.show', $pengajuan->id) }}">
@@ -77,12 +101,12 @@
                                         </a>
                                     @endcan
 
-                                    @can('pengajuan_edit')
+                                    {{-- @can('pengajuan_edit')
                                         <a class="btn btn-xs btn-info"
                                             href="{{ route('admin.pengajuans.edit', $pengajuan->id) }}">
                                             {{ trans('global.edit') }}
                                         </a>
-                                    @endcan
+                                    @endcan --}}
 
                                     @can('pengajuan_delete')
                                         <form id="delete-form-{{ $pengajuan->id }}"
@@ -123,6 +147,48 @@
                 if (result.isConfirmed) {
                     // jika pengguna menekan tombol "Yes, delete it!", submit form
                     document.getElementById('delete-form-' + pengajuanId).submit();
+                    Swal.fire('Tersimpan!', '', 'success')
+                } else if (result.isDenied) {
+                    Swal.fire('Perubahan tidak di simpan', '', 'info')
+                }
+            });
+        }
+    </script>
+    <script>
+        function pengajuanVerif(pengajuanId) {
+            Swal.fire({
+                title: 'Apakah anda yakin?',
+                text: "Verifikasi Pengajuan ini!",
+                icon: 'warning',
+                confirmButtonText: 'Iya, Verifikasi!',
+                showDenyButton: true,
+                denyButtonText: `Tidak, batal!`,
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // jika pengguna menekan tombol "Yes, delete it!", submit form
+                    document.getElementById('verif-form-' + pengajuanId).submit();
+                    Swal.fire('Tersimpan!', '', 'success')
+                } else if (result.isDenied) {
+                    Swal.fire('Perubahan tidak di simpan', '', 'info')
+                }
+            });
+        }
+    </script>
+    <script>
+        function pengajuanTolak(pengajuanId) {
+            Swal.fire({
+                title: 'Apakah anda yakin?',
+                text: "Tolak Pengajuan ini!",
+                icon: 'warning',
+                confirmButtonText: 'Iya, Tolak!',
+                showDenyButton: true,
+                denyButtonText: `Tidak, batal!`,
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // jika pengguna menekan tombol "Yes, delete it!", submit form
+                    document.getElementById('tolak-form-' + pengajuanId).submit();
                     Swal.fire('Tersimpan!', '', 'success')
                 } else if (result.isDenied) {
                     Swal.fire('Perubahan tidak di simpan', '', 'info')
