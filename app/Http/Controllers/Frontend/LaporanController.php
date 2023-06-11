@@ -8,6 +8,7 @@ use App\Http\Requests\MassDestroyLaporanRequest;
 use App\Http\Requests\StoreLaporanRequest;
 use App\Http\Requests\UpdateLaporanRequest;
 use App\Models\Laporan;
+use App\Models\Mahasiswa;
 use App\Models\Pengajuan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -22,7 +23,7 @@ class LaporanController extends Controller
     {
         abort_if(Gate::denies('laporan_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $laporans = Laporan::with(['pengajuan', 'media'])->get();
+        $laporans = Mahasiswa::with('laporans')->where('user_id', auth()->id())->get();
 
         return view('frontend.laporans.index', compact('laporans'));
     }
@@ -31,9 +32,11 @@ class LaporanController extends Controller
     {
         abort_if(Gate::denies('laporan_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        $id = Mahasiswa::select('id')->where('user_id', auth()->id())->first();
         $pengajuans = Pengajuan::select('pengajuans.id', 'programs.nama_program')
             ->join('programs', 'programs.id', '=', 'pengajuans.program_id')
             ->where('pengajuans.verif', 'Verifikasi')
+            ->where('pengajuans.mahasiswa_id', $id->id)
             ->get()
             ->map(function ($pengajuan) {
                 return [

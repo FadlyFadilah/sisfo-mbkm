@@ -20,7 +20,7 @@
 
                         <div class="row">
                             <div class="col-md-6">
-                                <div class="card bg-white">
+                                <div class="card bg-navy">
                                     <div class="card-header">
                                         Pengajuan
                                     </div>
@@ -30,25 +30,37 @@
                                 </div>
                             </div>
                             <div class="col-md-6"></div>
-                            @foreach ($programs as $item)
-                                @php
-                                    $colors = ['bg-info', 'bg-success', 'bg-warning', 'bg-danger', 'bg-indigo', 'bg-purple', 'bg-lime', 'bg-olive'];
-                                    $randomIndex = array_rand($colors);
-                                    $randomColor = $colors[$randomIndex];
-                                @endphp
-                                <div class="col-lg-3 col-xs-6">
-                                    <!-- small box -->
-                                    <div class="small-box {{ $randomColor }}">
-                                        <div class="inner">
-                                            <h5>{{ $item->nama_program }}</p>
-                                            <p>{{ $item->desc }}</p>
-                                        </div>
-                                        <div class="icon">
-                                            <i class="ion ion-pie-graph"></i>
+                            <div class="col-md-12">
+                                <div class="card bg-navy">
+                                    <div class="card-header">
+                                        Jumlah Mahasiswa yang mengikuti per-Program
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            @foreach ($programs as $item)
+                                            @php
+                                                $colors = ['bg-info', 'bg-success', 'bg-warning', 'bg-danger', 'bg-indigo', 'bg-purple', 'bg-lime', 'bg-olive'];
+                                                $randomIndex = array_rand($colors);
+                                                $randomColor = $colors[$randomIndex];
+                                            @endphp
+                                            <div class="col-lg-3 col-xs-6">
+                                                <!-- small box -->
+                                                <div class="small-box {{ $randomColor }}">
+                                                    <div class="inner">
+                                                        <h3>{{ $item->program_pengajuans_count ?? '0' }}</h3>
+                                                        
+                                                        <p>{{ $item->nama_program }}</p>
+                                                    </div>
+                                                    <div class="icon">
+                                                        <i class="ion ion-pie-graph"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            @endforeach
                                         </div>
                                     </div>
                                 </div>
-                            @endforeach
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -71,7 +83,8 @@
                         Morris.Donut({
                             element: 'chart-container',
                             data: data,
-                            colors: ['#ffc107', '#007bff', '#dc3545']
+                            colors: ['#ffc107', '#007bff', '#dc3545'],
+                            labelColor: '#ffffff'
                         });
                     } else {
                         $('#chart-container').text('Data tidak tersedia');

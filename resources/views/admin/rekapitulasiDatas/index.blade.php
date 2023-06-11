@@ -7,14 +7,14 @@
 
         <div class="card-body">
             <div class="row">
-                <div class="{{ $chartprogram->options['column_class'] }}">
+                {{-- <div class="{{ $chartprogram->options['column_class'] }}">
                     <h3>{!! $chartprogram->options['chart_title'] !!}</h3>
                     {!! $chartprogram->renderHtml() !!}
                 </div>
                 <div class="{{ $chart->options['column_class'] }}">
                     <h3>{!! $chart->options['chart_title'] !!}</h3>
                     {!! $chart->renderHtml() !!}
-                </div>
+                </div> --}}
                 <div class="col-lg-6">
                     <h3>Export Laporan</h3>
                     <form action="{{ route('admin.export.full') }}" method="post" required>

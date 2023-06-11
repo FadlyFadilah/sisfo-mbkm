@@ -13,6 +13,7 @@ class HomeController
     public function index()
     {
         $programs = Program::withCount('programPengajuans')->get();
+
         return view('home', compact('programs'));
     }
 
@@ -32,7 +33,42 @@ class HomeController
 
         return response()->json($chartData);
     }
-    
+
+    public function chartbar()
+    {
+        $data = Pengajuan::join('programs', 'pengajuans.program_id', '=', 'programs.id')
+            ->groupBy('programs.nama_program')
+            ->selectRaw('programs.nama_program, COUNT(*) as count')
+            ->orderBy('count', 'desc')
+            ->get();
+
+        return response()->json($data);
+    }
+
+    public function chartMahasiswaByProdi()
+    {
+        $mahasiswa = Mahasiswa::whereHas('mahasiswaPengajuans')->get();
+        $prodiList = [];
+
+        foreach ($mahasiswa as $mhs) {
+            $prodi = $mhs->prodi->nama_prodi; // Menggunakan nama_prodi sebagai field prodi
+            if (!in_array($prodi, $prodiList)) {
+                $prodiList[] = $prodi;
+            }
+        }
+
+        $data = [];
+
+        foreach ($prodiList as $prodi) {
+            $data[] = [
+                'nama_prodi' => $prodi, // Menggunakan nama_prodi sebagai field prodi
+                'jumlah_pengajuan' => $mahasiswa->where('prodi.nama_prodi', $prodi)->count(),
+            ];
+        }
+
+        return response()->json($data);
+    }
+
     public function detail($nama)
     {
         $program = Program::where('nama_program', $nama)->first();

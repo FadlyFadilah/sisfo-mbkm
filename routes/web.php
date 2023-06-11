@@ -32,6 +32,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     
     Route::get('/', 'HomeController@index')->name('home');
     Route::get('/chart', 'HomeController@chart')->name('chart');
+    Route::get('/chartbar', 'HomeController@chartbar');
+    Route::get('/chartbarprodi', 'HomeController@chartMahasiswaByProdi');
     Route::get('/details/{nama}', 'HomeController@detail')->name('home.details');
     Route::get('/details/{nama}/{prodi}', 'HomeController@show')->name('home.show');
     // Permissions
@@ -94,6 +96,7 @@ Route::group(['as' => 'frontend.', 'namespace' => 'Frontend', 'middleware' => ['
     Route::post('profile/destroy', 'ChangePasswordUserController@destroy')->name('password.destroyProfile');
     Route::get('/home', 'HomeController@index')->name('home');
     Route::get('/chart', 'HomeController@Chart');
+    // Route::get('/chartbar', 'HomeController@chartbar');
 
     // Mahasiswa
     Route::resource('mahasiswas', 'MahasiswaController');

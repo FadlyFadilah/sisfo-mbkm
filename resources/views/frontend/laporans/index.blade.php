@@ -44,58 +44,60 @@
                                         $no = 1;
                                     @endphp
                                     @foreach ($laporans as $key => $laporan)
-                                        <tr data-entry-id="{{ $laporan->id }}">
-                                            <td>
-                                                {{ $no++ }}
-                                            </td>
-                                            <td>
-                                                {{ $laporan->pengajuan->semester ?? '' }}
-                                            </td>
-                                            <td>
-                                                @if ($laporan->sertifikat)
-                                                    <a href="{{ $laporan->sertifikat->getUrl() }}" target="_blank">
-                                                        {{ trans('global.view_file') }}
-                                                    </a>
-                                                @endif
-                                            </td>
-                                            <td>
-                                                @if ($laporan->laporan)
-                                                    <a href="{{ $laporan->laporan->getUrl() }}" target="_blank">
-                                                        {{ trans('global.view_file') }}
-                                                    </a>
-                                                @endif
-                                            </td>
-                                            <td>
-                                                @can('laporan_show')
-                                                    <a class="btn btn-xs btn-primary"
-                                                        href="{{ route('frontend.laporans.show', $laporan->id) }}">
-                                                        {{ trans('global.view') }}
-                                                    </a>
-                                                @endcan
+                                        @foreach ($laporan->laporans as $laporan)
+                                            <tr data-entry-id="{{ $laporan->id }}">
+                                                <td>
+                                                    {{ $no++ }}
+                                                </td>
+                                                <td>
+                                                    {{ $laporan->pengajuan->program->nama_program ?? '' }}
+                                                </td>
+                                                <td>
+                                                    @if ($laporan->sertifikat)
+                                                        <a href="{{ $laporan->sertifikat->getUrl() }}" target="_blank">
+                                                            {{ trans('global.view_file') }}
+                                                        </a>
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    @if ($laporan->laporan)
+                                                        <a href="{{ $laporan->laporan->getUrl() }}" target="_blank">
+                                                            {{ trans('global.view_file') }}
+                                                        </a>
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    @can('laporan_show')
+                                                        <a class="btn btn-xs btn-primary"
+                                                            href="{{ route('frontend.laporans.show', $laporan->id) }}">
+                                                            {{ trans('global.view') }}
+                                                        </a>
+                                                    @endcan
 
-                                                @can('laporan_edit')
-                                                    <a class="btn btn-xs btn-info"
-                                                        href="{{ route('frontend.laporans.edit', $laporan->id) }}">
-                                                        {{ trans('global.edit') }}
-                                                    </a>
-                                                @endcan
+                                                    @can('laporan_edit')
+                                                        <a class="btn btn-xs btn-info"
+                                                            href="{{ route('frontend.laporans.edit', $laporan->id) }}">
+                                                            {{ trans('global.edit') }}
+                                                        </a>
+                                                    @endcan
 
-                                                @can('laporan_delete')
-                                                    <form id="delete-form-{{ $laporan->id }}"
-                                                        action="{{ route('admin.laporans.destroy', $laporan->id) }}"
-                                                        method="POST" style="display: inline-block;">
-                                                        <input type="hidden" name="_method" value="DELETE">
-                                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                                        <button type="button" class="btn btn-xs btn-danger"
-                                                            onclick="deleteLaporan({{ $laporan->id }})">
-                                                            {{ trans('global.delete') }}
-                                                        </button>
-                                                    </form>
-                                                @endcan
+                                                    @can('laporan_delete')
+                                                        <form id="delete-form-{{ $laporan->id }}"
+                                                            action="{{ route('admin.laporans.destroy', $laporan->id) }}"
+                                                            method="POST" style="display: inline-block;">
+                                                            <input type="hidden" name="_method" value="DELETE">
+                                                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                                            <button type="button" class="btn btn-xs btn-danger"
+                                                                onclick="deleteLaporan({{ $laporan->id }})">
+                                                                {{ trans('global.delete') }}
+                                                            </button>
+                                                        </form>
+                                                    @endcan
 
-                                            </td>
+                                                </td>
 
-                                        </tr>
+                                            </tr>
+                                        @endforeach
                                     @endforeach
                                 </tbody>
                             </table>

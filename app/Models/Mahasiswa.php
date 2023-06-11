@@ -25,7 +25,7 @@ class Mahasiswa extends Model
         'laki-laki' => 'Laki-Laki',
         'perempuan' => 'Perempuan',
     ];
-    
+
     protected $fillable = [
         'user_id',
         'nama_lengkap',
@@ -72,5 +72,14 @@ class Mahasiswa extends Model
     public function periode()
     {
         return $this->belongsTo(Periode::class, 'periode_id');
+    }
+    public function pengajuanByProdi($prodi)
+    {
+        return $this->mahasiswaPengajuans()->where('prodi', $prodi)->count();
+    }
+
+    public function laporans()
+    {
+        return $this->hasManyThrough(Laporan::class, Pengajuan::class);
     }
 }

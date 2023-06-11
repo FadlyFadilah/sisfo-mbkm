@@ -11,7 +11,7 @@ class HomeController
 {
     public function index()
     {
-        $programs = Program::select('nama_program', 'desc')->get();
+        $programs = Program::withCount('programPengajuans')->get();
         return view('frontend.home', compact('programs'));
     }
 

@@ -41,22 +41,9 @@
             </ul>
 
             <!-- Right navbar links -->
-            @if (count(config('panel.available_languages', [])) > 1)
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link" data-toggle="dropdown" href="#">
-                            {{ strtoupper(app()->getLocale()) }}
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right">
-                            @foreach (config('panel.available_languages') as $langLocale => $langName)
-                                <a class="dropdown-item"
-                                    href="{{ url()->current() }}?change_language={{ $langLocale }}">{{ strtoupper($langLocale) }}
-                                    ({{ $langName }})</a>
-                            @endforeach
-                        </div>
-                    </li>
-                </ul>
-            @endif
+            <ul class="navbar-nav ml-auto">
+                
+            </ul>
 
         </nav>
 
@@ -65,11 +52,15 @@
             <!-- Main content -->
             <section class="content" style="padding-top: 20px">
                 @if (session('message'))
-                    <div class="row mb-2">
-                        <div class="col-lg-12">
-                            <div class="alert alert-success" role="alert">{{ session('message') }}</div>
-                        </div>
-                    </div>
+                    <script>
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success!',
+                            text: '{{ session()->get('success') }}',
+                            showConfirmButton: false,
+                            timer: 3000 // Durasi notifikasi dalam milidetik (opsional)
+                        });
+                    </script>
                 @endif
                 @if ($errors->count() > 0)
                     <div class="alert alert-danger">
@@ -81,26 +72,26 @@
                     </div>
                 @endif
                 @if (session()->has('success'))
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="alert alert-success">
-                                    {{ session()->get('success') }}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <script>
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success!',
+                            text: '{{ session()->get('success') }}',
+                            showConfirmButton: false,
+                            timer: 3000 // Durasi notifikasi dalam milidetik (opsional)
+                        });
+                    </script>
                 @endif
                 @if (session()->has('error'))
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="alert alert-danger">
-                                    {{ session()->get('error') }}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <script>
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'error!',
+                            text: '{{ session()->get('error') }}',
+                            showConfirmButton: false,
+                            timer: 3000 // Durasi notifikasi dalam milidetik (opsional)
+                        });
+                    </script>
                 @endif
                 @yield('content')
             </section>
@@ -117,6 +108,7 @@
             {{ csrf_field() }}
         </form>
     </div>
+    <script src="{{ asset('js/sweetalert.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
