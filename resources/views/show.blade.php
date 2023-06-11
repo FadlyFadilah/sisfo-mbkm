@@ -11,7 +11,8 @@
     </div>
     <div class="card">
         <div class="card-header">
-            {{ trans('global.list') }}{{ trans('cruds.mahasiswa.title_singular') }} : {{ $nama }}, {{ $prodi }}
+            {{ trans('global.list') }}{{ trans('cruds.mahasiswa.title_singular') }} : {{ $nama }},
+            {{ $prodi }}
         </div>
 
         <div class="card-body">
@@ -85,13 +86,15 @@
                                     @endcan
 
                                     @can('mahasiswa_delete')
-                                        <form action="{{ route('admin.mahasiswas.destroy', $mahasiswa->id) }}" method="POST"
-                                            onsubmit="return confirm('{{ trans('global.areYouSure') }}');"
+                                        <form id="delete-form-{{ $mahasiswa->id }}"
+                                            action="{{ route('admin.mahasiswas.destroy', $mahasiswa->id) }}" method="POST"
                                             style="display: inline-block;">
                                             <input type="hidden" name="_method" value="DELETE">
                                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                            <input type="submit" class="btn btn-xs btn-danger"
-                                                value="{{ trans('global.delete') }}">
+                                            <button type="button" class="btn btn-xs btn-danger"
+                                                onclick="deleteMahasiswa({{ $mahasiswa->id }})">
+                                                {{ trans('global.delete') }}
+                                            </button>
                                         </form>
                                     @endcan
 
@@ -118,21 +121,21 @@
                     <div class="modal-body">
                         <label for="prodi">Prodi</label>
                         <select class="form-control {{ $errors->has('prodi') ? 'is-invalid' : '' }}" name="prodi_id" id="prodi_id" required>
-                            @foreach($prodis as $id => $entry)
+                            @foreach ($prodis as $id => $entry)
                                 <option value="{{ $id }}" {{ old('prodi_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
                             @endforeach
                         </select>
                         <br>
                         <label for="tahun_periode">Tahun Periode</label>
                         <select class="form-control {{ $errors->has('periode') ? 'is-invalid' : '' }}" name="periode_id" id="periode_id" required>
-                            @foreach($periodes as $id => $entry)
+                            @foreach ($periodes as $id => $entry)
                                 <option value="{{ $id }}" {{ old('periode_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
                             @endforeach
                         </select>
                         <br>
                         <label for="program">Program</label>
                         <select class="form-control {{ $errors->has('program') ? 'is-invalid' : '' }}" name="program_id" id="program_id" required>
-                            @foreach($programs as $id => $entry)
+                            @foreach ($programs as $id => $entry)
                                 <option value="{{ $id }}" {{ old('program_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
                             @endforeach
                         </select>
@@ -148,6 +151,27 @@
     </div> --}}
 @endsection
 @section('scripts')
+    <script>
+        function deleteMahasiswa(mahasiswaId) {
+            Swal.fire({
+                title: 'Apakah anda yakin?',
+                text: "data tidak akan bisa di kembalikan!",
+                icon: 'warning',
+                confirmButtonText: 'Iya, hapus!',
+                showDenyButton: true,
+                denyButtonText: `Tidak, batal!`,
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // jika pengguna menekan tombol "Yes, delete it!", submit form
+                    document.getElementById('delete-form-' + mahasiswaId).submit();
+                    Swal.fire('Tersimpan!', '', 'success')
+                } else if (result.isDenied) {
+                    Swal.fire('Perubahan tidak di simpan', '', 'info')
+                }
+            });
+        }
+    </script>
     @parent
     <script>
         $(function() {

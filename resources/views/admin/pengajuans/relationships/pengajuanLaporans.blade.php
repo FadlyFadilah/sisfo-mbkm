@@ -39,7 +39,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($laporans as $key => $laporan)
+                        @foreach ($laporans as $key => $laporan)
                             <tr data-entry-id="{{ $laporan->id }}">
                                 <td>
 
@@ -48,17 +48,17 @@
                                     {{ $laporan->id ?? '' }}
                                 </td>
                                 <td>
-                                    {{ $laporan->pengajuan->semester ?? '' }}
+                                    {{ $laporan->pengajuan->program->nama_program ?? '' }}
                                 </td>
                                 <td>
-                                    @if($laporan->sertifikat)
+                                    @if ($laporan->sertifikat)
                                         <a href="{{ $laporan->sertifikat->getUrl() }}" target="_blank">
                                             {{ trans('global.view_file') }}
                                         </a>
                                     @endif
                                 </td>
                                 <td>
-                                    @if($laporan->laporan)
+                                    @if ($laporan->laporan)
                                         <a href="{{ $laporan->laporan->getUrl() }}" target="_blank">
                                             {{ trans('global.view_file') }}
                                         </a>
@@ -66,22 +66,29 @@
                                 </td>
                                 <td>
                                     @can('laporan_show')
-                                        <a class="btn btn-xs btn-primary" href="{{ route('admin.laporans.show', $laporan->id) }}">
+                                        <a class="btn btn-xs btn-primary"
+                                            href="{{ route('admin.laporans.show', $laporan->id) }}">
                                             {{ trans('global.view') }}
                                         </a>
                                     @endcan
 
                                     @can('laporan_edit')
-                                        <a class="btn btn-xs btn-info" href="{{ route('admin.laporans.edit', $laporan->id) }}">
+                                        <a class="btn btn-xs btn-info"
+                                            href="{{ route('admin.laporans.edit', $laporan->id) }}">
                                             {{ trans('global.edit') }}
                                         </a>
                                     @endcan
 
                                     @can('laporan_delete')
-                                        <form action="{{ route('admin.laporans.destroy', $laporan->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                                        <form id="delete-form-{{ $laporan->id }}"
+                                            action="{{ route('admin.laporans.destroy', $laporan->id) }}" method="POST"
+                                            style="display: inline-block;">
                                             <input type="hidden" name="_method" value="DELETE">
                                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                            <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
+                                            <button type="button" class="btn btn-xs btn-danger"
+                                                onclick="deleteLaporan({{ $laporan->id }})">
+                                                {{ trans('global.delete') }}
+                                            </button>
                                         </form>
                                     @endcan
 
@@ -96,52 +103,86 @@
     </div>
 </div>
 @section('scripts')
-@parent
-<script>
-    $(function () {
-  let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
-@can('laporan_delete')
-  let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
-  let deleteButton = {
-    text: deleteButtonTrans,
-    url: "{{ route('admin.laporans.massDestroy') }}",
-    className: 'btn-danger',
-    action: function (e, dt, node, config) {
-      var ids = $.map(dt.rows({ selected: true }).nodes(), function (entry) {
-          return $(entry).data('entry-id')
-      });
+    @parent
+    <script>
+        function deleteLaporan(laporanId) {
+            Swal.fire({
+                title: 'Apakah anda yakin?',
+                text: "data tidak akan bisa di kembalikan!",
+                icon: 'warning',
+                confirmButtonText: 'Iya, hapus!',
+                showDenyButton: true,
+                denyButtonText: `Tidak, batal!`,
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // jika pengguna menekan tombol "Yes, delete it!", submit form
+                    document.getElementById('delete-form-' + laporanId).submit();
+                    Swal.fire('Tersimpan!', '', 'success')
+                } else if (result.isDenied) {
+                    Swal.fire('Perubahan tidak di simpan', '', 'info')
+                }
+            });
+        }
+    </script>
+    <script>
+        $(function() {
+            let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
+            @can('laporan_delete')
+                let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
+                let deleteButton = {
+                    text: deleteButtonTrans,
+                    url: "{{ route('admin.laporans.massDestroy') }}",
+                    className: 'btn-danger',
+                    action: function(e, dt, node, config) {
+                        var ids = $.map(dt.rows({
+                            selected: true
+                        }).nodes(), function(entry) {
+                            return $(entry).data('entry-id')
+                        });
 
-      if (ids.length === 0) {
-        alert('{{ trans('global.datatables.zero_selected') }}')
+                        if (ids.length === 0) {
+                            alert('{{ trans('global.datatables.zero_selected') }}')
 
-        return
-      }
+                            return
+                        }
 
-      if (confirm('{{ trans('global.areYouSure') }}')) {
-        $.ajax({
-          headers: {'x-csrf-token': _token},
-          method: 'POST',
-          url: config.url,
-          data: { ids: ids, _method: 'DELETE' }})
-          .done(function () { location.reload() })
-      }
-    }
-  }
-  dtButtons.push(deleteButton)
-@endcan
+                        if (confirm('{{ trans('global.areYouSure') }}')) {
+                            $.ajax({
+                                    headers: {
+                                        'x-csrf-token': _token
+                                    },
+                                    method: 'POST',
+                                    url: config.url,
+                                    data: {
+                                        ids: ids,
+                                        _method: 'DELETE'
+                                    }
+                                })
+                                .done(function() {
+                                    location.reload()
+                                })
+                        }
+                    }
+                }
+                dtButtons.push(deleteButton)
+            @endcan
 
-  $.extend(true, $.fn.dataTable.defaults, {
-    orderCellsTop: true,
-    order: [[ 1, 'desc' ]],
-    pageLength: 100,
-  });
-  let table = $('.datatable-pengajuanLaporans:not(.ajaxTable)').DataTable({ buttons: dtButtons })
-  $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
-      $($.fn.dataTable.tables(true)).DataTable()
-          .columns.adjust();
-  });
-  
-})
+            $.extend(true, $.fn.dataTable.defaults, {
+                orderCellsTop: true,
+                order: [
+                    [1, 'desc']
+                ],
+                pageLength: 100,
+            });
+            let table = $('.datatable-pengajuanLaporans:not(.ajaxTable)').DataTable({
+                buttons: dtButtons
+            })
+            $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e) {
+                $($.fn.dataTable.tables(true)).DataTable()
+                    .columns.adjust();
+            });
 
-</script>
+        })
+    </script>
 @endsection

@@ -52,7 +52,7 @@
                                     {{ $no++ }}
                                 </td>
                                 <td>
-                                    {{ $laporan->pengajuan->semester ?? '' }}
+                                    {{ $laporan->pengajuan->program->nama_program ?? '' }}
                                 </td>
                                 <td>
                                     @if ($laporan->sertifikat)
