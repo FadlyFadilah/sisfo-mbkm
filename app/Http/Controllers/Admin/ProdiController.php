@@ -54,7 +54,7 @@ class ProdiController extends Controller
     {
         abort_if(Gate::denies('prodi_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $prodi->load('prodiMahasiswas');
+        $prodi->load('mahasiswas');
 
         return view('admin.prodis.show', compact('prodi'));
     }

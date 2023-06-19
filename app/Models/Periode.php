@@ -21,6 +21,7 @@ class Periode extends Model
 
     protected $fillable = [
         'tahun_periode',
+        'status',
         'created_at',
         'updated_at',
         'deleted_at',

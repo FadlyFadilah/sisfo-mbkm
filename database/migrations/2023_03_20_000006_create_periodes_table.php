@@ -11,6 +11,7 @@ class CreatePeriodesTable extends Migration
         Schema::create('periodes', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('tahun_periode');
+            $table->string('status')->default('Tidak Aktif');
             $table->timestamps();
             $table->softDeletes();
         });

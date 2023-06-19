@@ -69,14 +69,15 @@
                                             <div class="small-box {{ $randomColor }}">
                                                 <div class="inner">
                                                     <h3>{{ $item->program_pengajuans_count ?? '0' }}</h3>
-        
+
                                                     <p>{{ $item->nama_program }}</p>
                                                 </div>
                                                 <div class="icon">
                                                     <i class="ion ion-pie-graph"></i>
                                                 </div>
                                                 <a href="{{ route('admin.home.details', $item->nama_program) }}"
-                                                    class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                                                    class="small-box-footer">More info <i
+                                                        class="fa fa-arrow-circle-right"></i></a>
                                             </div>
                                         </div>
                                     @endforeach
@@ -120,14 +121,21 @@
                 type: 'GET',
                 dataType: 'json',
                 success: function(data) {
+                    var colors = ['#F0F8FF', '#00FFFF', '#7FFF00', '#DC143C', '#8FBC8F'];
                     Morris.Bar({
                         element: 'bar-chart-container',
                         data: data,
                         xkey: 'nama_program',
                         ykeys: ['count'],
                         labels: ['Pengajuan'],
-                        barColors: ['#ffc107', '#007bff', '#dc3545'],
-                        hideHover: 'auto'
+                        barColors: function(row, series, type) {
+                            return colors[row.x];
+                        },
+                        hideHover: 'auto',
+                        resize: true,
+                        yLabelFormat: function(y) {
+                            return Math.round(y);
+                        },
                     });
                 },
                 error: function(xhr, textStatus, errorThrown) {
@@ -139,27 +147,34 @@
                 type: 'GET',
                 dataType: 'json',
                 success: function(data) {
+                    var colors = ['#dc3545', '#FFC107', '#007BFF', '#01FF70', '#17A2B8'];
                     var chartData = [];
-
                     for (var i = 0; i < data.length; i++) {
                         chartData.push({
-                            prodi: data[i].nama_prodi, // Menggunakan nama_prodi sebagai x key
-                            jumlah_pengajuan: data[i].jumlah_pengajuan
+                            prodi: data[i].prodi,
+                            jumlah_pengajuan: Math.round(data[i].jumlah_pengajuan)
                         });
                     }
-
-                    Morris.Bar({
+                    new Morris.Bar({
                         element: 'bar-chart-containerr',
                         data: chartData,
                         xkey: 'prodi',
                         ykeys: ['jumlah_pengajuan'],
                         labels: ['Jumlah Pengajuan'],
-                            colors: ['#dc3545','#007bff','#ffc107'],
-                        hideHover: 'auto'
+                        barColors: function(row, series, type) {
+                            return colors[row.x];
+                        },
+                        hideHover: 'auto',
+                        resize: true,
+                        yLabelFormat: function(y) {
+                            return Math.round(y);
+                        },
                     });
                 },
                 error: function(xhr, textStatus, errorThrown) {
-                    console.log(xhr.responseText);
+                    console.log(xhr.responseText); 
+                    // Tampilkan pesan jika tidak ada data yang diterima
+                    $('#bar-chart-containerr').html('Tidak ada data yang tersedia.');
                 }
             });
         });

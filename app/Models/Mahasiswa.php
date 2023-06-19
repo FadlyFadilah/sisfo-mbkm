@@ -43,10 +43,13 @@ class Mahasiswa extends Model
     {
         return $date->format('Y-m-d H:i:s');
     }
-
     public function mahasiswaPengajuans()
     {
         return $this->hasMany(Pengajuan::class, 'mahasiswa_id', 'id');
+    }
+    public function hasSubmittedProgram($programId)
+    {
+        return $this->mahasiswaPengajuans()->where('program_id', $programId)->exists();
     }
 
     public function user()

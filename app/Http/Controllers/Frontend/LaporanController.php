@@ -33,6 +33,9 @@ class LaporanController extends Controller
         abort_if(Gate::denies('laporan_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $id = Mahasiswa::select('id')->where('user_id', auth()->id())->first();
+        if (!$id) {
+            return back()->with('error', 'Tolong isi data mahasiswa atau ajukan pengajuan terlebih dahulu!');
+        }
         $pengajuans = Pengajuan::select('pengajuans.id', 'programs.nama_program')
             ->join('programs', 'programs.id', '=', 'pengajuans.program_id')
             ->where('pengajuans.verif', 'Verifikasi')

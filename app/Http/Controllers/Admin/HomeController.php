@@ -47,26 +47,21 @@ class HomeController
 
     public function chartMahasiswaByProdi()
     {
-        $mahasiswa = Mahasiswa::whereHas('mahasiswaPengajuans')->get();
-        $prodiList = [];
+        $data = Pengajuan::select('prodis.nama_prodi', DB::raw('COUNT(*) as jumlah_pengajuan'))
+            ->join('mahasiswas', 'pengajuans.mahasiswa_id', '=', 'mahasiswas.id')
+            ->join('prodis', 'mahasiswas.prodi_id', '=', 'prodis.id')
+            ->groupBy('prodis.nama_prodi')
+            ->get();
 
-        foreach ($mahasiswa as $mhs) {
-            $prodi = $mhs->prodi->nama_prodi; // Menggunakan nama_prodi sebagai field prodi
-            if (!in_array($prodi, $prodiList)) {
-                $prodiList[] = $prodi;
-            }
-        }
-
-        $data = [];
-
-        foreach ($prodiList as $prodi) {
-            $data[] = [
-                'nama_prodi' => $prodi, // Menggunakan nama_prodi sebagai field prodi
-                'jumlah_pengajuan' => $mahasiswa->where('prodi.nama_prodi', $prodi)->count(),
+        $chartData = [];
+        foreach ($data as $item) {
+            $chartData[] = [
+                'prodi' => $item->nama_prodi,
+                'jumlah_pengajuan' => $item->jumlah_pengajuan,
             ];
         }
 
-        return response()->json($data);
+        return response()->json($chartData);
     }
 
     public function detail($nama)

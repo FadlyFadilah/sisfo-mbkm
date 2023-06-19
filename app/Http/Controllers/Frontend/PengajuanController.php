@@ -31,10 +31,10 @@ class PengajuanController extends Controller
     public function create()
     {
         abort_if(Gate::denies('pengajuan_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $mahasiswa = Mahasiswa::where('user_id', auth()->user()->id)->first();
         $programs = Program::pluck('nama_program', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('frontend.pengajuans.create', compact('programs'));
+        return view('frontend.pengajuans.create', compact('programs', 'mahasiswa'));
     }
 
     public function store(StorePengajuanRequest $request)

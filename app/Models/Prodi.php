@@ -31,7 +31,7 @@ class Prodi extends Model
         return $date->format('Y-m-d H:i:s');
     }
 
-    public function prodiMahasiswas()
+    public function mahasiswas()
     {
         return $this->hasMany(Mahasiswa::class, 'prodi_id', 'id');
     }
