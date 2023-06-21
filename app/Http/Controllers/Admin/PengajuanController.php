@@ -8,6 +8,8 @@ use App\Http\Requests\StorePengajuanRequest;
 use App\Http\Requests\UpdatePengajuanRequest;
 use App\Models\Mahasiswa;
 use App\Models\Pengajuan;
+use App\Models\Periode;
+use App\Models\Prodi;
 use App\Models\Program;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -15,13 +17,62 @@ use Symfony\Component\HttpFoundation\Response;
 
 class PengajuanController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         abort_if(Gate::denies('pengajuan_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $pengajuans = Pengajuan::with(['mahasiswa', 'program'])->get();
+        $prodis = Prodi::pluck('nama_prodi', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.pengajuans.index', compact('pengajuans'));
+        $periodes = Periode::pluck('tahun_periode', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $programs = Program::pluck('nama_program', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $prodi = $request['prodi_id'];
+        $tahun = $request['periode_id'];
+        $program = $request['program_id'];
+
+        if ($tahun) {
+            $pengajuans = Pengajuan::with(['mahasiswa', 'program'])
+                ->when($prodi, function ($query, $prodi) {
+                    return $query->whereHas('mahasiswa', function ($query) use ($prodi) {
+                        $query->where('prodi_id', $prodi);
+                    });
+                })
+                ->when($tahun, function ($query, $tahun) {
+                    return $query->whereHas('mahasiswa.periode', function ($query) use ($tahun) {
+                        $query->where('periode_id', $tahun);
+                    });
+                })
+                ->when($program, function ($query, $program) {
+                    return $query->whereHas('program', function ($query) use ($program) {
+                        $query->where('id', $program);
+                    });
+                })
+                ->get();
+        } else {
+            $pengajuans = Pengajuan::with(['mahasiswa', 'program'])
+                ->when($prodi, function ($query, $prodi) {
+                    return $query->whereHas('mahasiswa', function ($query) use ($prodi) {
+                        $query->where('prodi_id', $prodi);
+                    });
+                })
+                ->when($tahun, function ($query, $tahun) {
+                    return $query->whereHas('mahasiswa.periode', function ($query) use ($tahun) {
+                        $query->where('periode_id', $tahun);
+                    });
+                })
+                ->when($program, function ($query, $program) {
+                    return $query->whereHas('program', function ($query) use ($program) {
+                        $query->where('id', $program);
+                    });
+                })
+                ->whereHas('mahasiswa.periode', function ($query) {
+                    $query->where('status', 'Aktif');
+                })
+                ->get();
+        }
+
+        return view('admin.pengajuans.index', compact('pengajuans', 'prodis', 'periodes', 'programs'));
     }
 
     public function create()

@@ -56,14 +56,16 @@
                                 </td>
                                 <td>
                                     @if ($laporan->sertifikat)
-                                        <a href="{{ $laporan->sertifikat->getUrl() }}" target="_blank">
+                                        <a href="{{ $laporan->sertifikat->getUrl() }}" target="_blank"
+                                            onclick="event.preventDefault(); window.open('{{ $laporan->sertifikat->getUrl() }}', '_blank');">
                                             {{ trans('global.view_file') }}
                                         </a>
                                     @endif
                                 </td>
                                 <td>
                                     @if ($laporan->laporan)
-                                        <a href="{{ $laporan->laporan->getUrl() }}" target="_blank">
+                                        <a href="{{ $laporan->laporan->getUrl() }}" target="_blank"
+                                            onclick="event.preventDefault(); window.open('{{ $laporan->laporan->getUrl() }}', '_blank');">
                                             {{ trans('global.view_file') }}
                                         </a>
                                     @endif

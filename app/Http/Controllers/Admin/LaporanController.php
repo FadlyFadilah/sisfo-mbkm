@@ -71,7 +71,7 @@ class LaporanController extends Controller
         $laporan->update($request->all());
 
         if ($request->input('laporan', false)) {
-            if (! $laporan->laporan || $request->input('laporan') !== $laporan->laporan->file_name) {
+            if (!$laporan->laporan || $request->input('laporan') !== $laporan->laporan->file_name) {
                 if ($laporan->laporan) {
                     $laporan->laporan->delete();
                 }
@@ -82,7 +82,7 @@ class LaporanController extends Controller
         }
 
         if ($request->input('sertifikat', false)) {
-            if (! $laporan->sertifikat || $request->input('sertifikat') !== $laporan->sertifikat->file_name) {
+            if (!$laporan->sertifikat || $request->input('sertifikat') !== $laporan->sertifikat->file_name) {
                 if ($laporan->sertifikat) {
                     $laporan->sertifikat->delete();
                 }
@@ -133,6 +133,11 @@ class LaporanController extends Controller
         $model->exists = true;
         $media         = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
 
-        return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
+        $url = $media->getUrl();
+        $headers = [
+            'Content-Type' => 'application/pdf',
+        ];
+
+        return response()->json(['id' => $media->id, 'url' => $url], Response::HTTP_CREATED, $headers);
     }
 }

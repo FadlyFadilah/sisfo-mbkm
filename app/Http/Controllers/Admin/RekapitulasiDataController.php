@@ -61,9 +61,27 @@ class RekapitulasiDataController extends Controller
     public function export(Request $request)
     {
         $prodi = $request->input('prodi_id');
+        if ($prodi) {
+            $prodii = Prodi::where('id', $prodi)->first();
+            $prodiii = $prodii->nama_prodi;
+        } else {
+            $prodiii = $request->input('prodi_id');
+        }
         $tahun = $request->input('periode_id');
+        if ($tahun) {
+            $tahunn = Periode::where('id', $tahun)->first();
+            $tahunnn = $tahunn->tahun_periode;
+        } else {
+            $tahunnn = $request->input('periode_id');
+        }
         $program = $request->input('program_id');
+        if ($program) {
+            $programm = Program::where('id', $program)->first();
+            $programmm = $programm->nama_program;
+        } else {
+            $programmm = $request->input('program_id');
+        }
 
-        return Excel::download(new TiExport($prodi, $tahun, $program), 'Laporan.xlsx');
+        return Excel::download(new TiExport($prodi, $tahun, $program), 'Laporan ' . $prodiii . '-' . $tahunnn . '-' . $programmm . '-' .  '.xlsx');
     }
 }

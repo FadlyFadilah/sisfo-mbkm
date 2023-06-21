@@ -31,6 +31,14 @@
                             {{ $periode->tahun_periode }}
                         </td>
                     </tr>
+                    <tr>
+                        <th>
+                            Status
+                        </th>
+                        <td>
+                            {{ $periode->status }}
+                        </td>
+                    </tr>
                 </tbody>
             </table>
             <div class="form-group">

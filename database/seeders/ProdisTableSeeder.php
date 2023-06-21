@@ -12,60 +12,52 @@ class ProdisTableSeeder extends Seeder
         $prodis = [
             [
                 'id'    => 1,
-                'nama_prodi' => 'Alat Berat',
+                'nama_prodi' => 'Teknik Komputer',
             ],
             [
                 'id'    => 2,
-                'nama_prodi' => 'Teknik Komputer ( B )',
-            ],
-            [
-                'id'    => 3,
                 'nama_prodi' => 'Teknik Mesin',
             ],
             [
-                'id'    => 4,
-                'nama_prodi' => 'Mekanik Otomotif ( B )',
+                'id'    => 3,
+                'nama_prodi' => 'Mesin Otomotif',
             ],
             [
-                'id'    => 5,
+                'id'    => 4,
                 'nama_prodi' => 'Akuntansi',
             ],
             [
+                'id'    => 5,
+                'nama_prodi' => 'Teknik Elektronika',
+            ],
+            [
                 'id'    => 6,
-                'nama_prodi' => 'Teknik Elektronika ( B )',
+                'nama_prodi' => 'Teknik Kimia',
             ],
             [
                 'id'    => 7,
-                'nama_prodi' => 'Teknik Kimia (Industri)',
-            ],
-            [
-                'id'    => 8,
                 'nama_prodi' => 'Rekam Medik dan Informasi Kesehatan',
             ],
             [
-                'id'    => 9,
-                'nama_prodi' => 'Konstruksi Bangunan (Teknik Sipil)',
+                'id'    => 8,
+                'nama_prodi' => 'Konstruksi Bangunan',
             ],
             [
-                'id'    => 10,
+                'id'    => 9,
                 'nama_prodi' => 'Teknik Informatika',
             ],
             [
+                'id'    => 10,
+                'nama_prodi' => 'Komputerisasi Akutansi',
+            ],
+            [
                 'id'    => 11,
-                'nama_prodi' => 'Komputerisasi Akutansi ( B )',
+                'nama_prodi' => 'Mekanik Industri dan Desain',
             ],
             [
                 'id'    => 12,
-                'nama_prodi' => 'Mekanik Industri dan Desain (Teknik Mesin) ( B )',
+                'nama_prodi' => 'Teknik Otomasi',
             ],
-            [
-                'id'    => 13,
-                'nama_prodi' => 'Teknik Otomasi Industri ( B )',
-            ],
-            [
-                'id'    => 14,
-                'nama_prodi' => 'Mekatronik',
-            ]
         ];
 
         Prodi::insert($prodis);

@@ -30,19 +30,41 @@ class MahasiswaController extends Controller
         $prodi = $request['prodi_id'];
         $tahun = $request['periode_id'];
         $program = $request['program_id'];
-        $mahasiswas = Mahasiswa::with(['user', 'prodi', 'periode', 'mahasiswaPengajuans.program'])
-            ->when($prodi, function ($query, $prodi) {
-                return $query->where('prodi_id', $prodi);
-            })
-            ->when($tahun, function ($query, $tahun) {
-                return $query->where('periode_id', $tahun);
-            })
-            ->when($program, function ($query, $program) {
-                return $query->whereHas('mahasiswaPengajuans.program', function ($query) use ($program) {
-                    $query->where('id', $program);
-                });
-            })
-            ->get();
+        if ($tahun) {
+            $mahasiswas = Mahasiswa::with(['user', 'prodi', 'periode', 'mahasiswaPengajuans.program'])
+                ->when($prodi, function ($query, $prodi) {
+                    return $query->where('prodi_id', $prodi);
+                })
+                ->when($tahun, function ($query, $tahun) {
+                    return $query->where('periode_id', $tahun);
+                })
+                ->when($program, function ($query, $program) {
+                    return $query->whereHas('mahasiswaPengajuans.program', function ($query) use ($program) {
+                        $query->where('id', $program);
+                    });
+                })
+                ->get();
+        } else {
+            $mahasiswas = Mahasiswa::with(['user', 'prodi', 'periode', 'mahasiswaPengajuans.program'])
+                ->when($prodi, function ($query, $prodi) {
+                    return $query->where('prodi_id', $prodi);
+                })
+                ->when($tahun, function ($query, $tahun) {
+                    return $query->where('periode_id', $tahun);
+                })
+                ->when($program, function ($query, $program) {
+                    return $query->whereHas('mahasiswaPengajuans.program', function ($query) use ($program) {
+                        $query->where('id', $program);
+                    });
+                })
+                ->when(true, function ($query) {
+                    // Tambahkan kondisi untuk tahun periode aktif
+                    $query->whereHas('periode', function ($query) {
+                        $query->where('status', 'Aktif');
+                    });
+                })
+                ->get();
+        }
 
         return view('admin.mahasiswas.index', compact('mahasiswas', 'prodis', 'periodes', 'programs'));
     }

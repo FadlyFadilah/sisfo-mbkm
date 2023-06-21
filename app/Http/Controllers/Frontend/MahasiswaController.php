@@ -27,6 +27,7 @@ class MahasiswaController extends Controller
 
     public function store(StoreMahasiswaRequest $request)
     {
+        $periode = Periode::where('status', 'Aktif')->first();
         $mahasiswa = Mahasiswa::updateOrCreate([
             'user_id'   => auth()->user()->id,
         ], [
@@ -35,7 +36,7 @@ class MahasiswaController extends Controller
             'jenis_kelamin'   => $request->get('jenis_kelamin'),
             'tanggal_lahir'   => $request->get('tanggal_lahir'),
             'prodi_id'    => $request->get("prodi_id"),
-            'periode_id'    => $request->get('periode_id')
+            'periode_id'    => $periode->id,
         ]);
 
         return redirect()->route('frontend.mahasiswas.index')->with('success', 'Berhasil Mengupdate');

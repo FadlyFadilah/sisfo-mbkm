@@ -29,6 +29,9 @@
                                 {{ trans('cruds.periode.fields.tahun_periode') }}
                             </th>
                             <th>
+                                Status
+                            </th>
+                            <th>
                                 &nbsp;
                             </th>
                         </tr>
@@ -47,6 +50,9 @@
                                 </td>
                                 <td>
                                     {{ $periode->tahun_periode ?? '' }}
+                                </td>
+                                <td>
+                                    {{ $periode->status ?? '' }}
                                 </td>
                                 <td>
                                     @can('periode_show')

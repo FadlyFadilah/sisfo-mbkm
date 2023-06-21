@@ -114,6 +114,8 @@
                 },
                 error: function(xhr, textStatus, errorThrown) {
                     console.log(xhr.responseText);
+                    // Tampilkan pesan jika tidak ada data yang diterima
+                    $('#chart-container').html('Tidak ada data yang tersedia.');
                 }
             });
             $.ajax({
@@ -121,25 +123,31 @@
                 type: 'GET',
                 dataType: 'json',
                 success: function(data) {
-                    var colors = ['#F0F8FF', '#00FFFF', '#7FFF00', '#DC143C', '#8FBC8F'];
-                    Morris.Bar({
-                        element: 'bar-chart-container',
-                        data: data,
-                        xkey: 'nama_program',
-                        ykeys: ['count'],
-                        labels: ['Pengajuan'],
-                        barColors: function(row, series, type) {
-                            return colors[row.x];
-                        },
-                        hideHover: 'auto',
-                        resize: true,
-                        yLabelFormat: function(y) {
-                            return Math.round(y);
-                        },
-                    });
+                    if (data.length === 0) {
+                        $('#bar-chart-container').text('Tidak ada pengajuan');
+                    } else {
+                        var colors = ['#F0F8FF', '#00FFFF', '#7FFF00', '#DC143C', '#8FBC8F'];
+                        Morris.Bar({
+                            element: 'bar-chart-container',
+                            data: data,
+                            xkey: 'nama_program',
+                            ykeys: ['count'],
+                            labels: ['Pengajuan'],
+                            barColors: function(row, series, type) {
+                                return colors[row.x];
+                            },
+                            hideHover: 'auto',
+                            resize: true,
+                            yLabelFormat: function(y) {
+                                return Math.round(y);
+                            },
+                        });
+                    }
                 },
                 error: function(xhr, textStatus, errorThrown) {
                     console.log(xhr.responseText);
+                    // Tampilkan pesan jika tidak ada data yang diterima
+                    $('#bar-chart-container').html('Tidak ada data yang tersedia.');
                 }
             });
             $.ajax({
@@ -147,32 +155,36 @@
                 type: 'GET',
                 dataType: 'json',
                 success: function(data) {
-                    var colors = ['#dc3545', '#FFC107', '#007BFF', '#01FF70', '#17A2B8'];
-                    var chartData = [];
-                    for (var i = 0; i < data.length; i++) {
-                        chartData.push({
-                            prodi: data[i].prodi,
-                            jumlah_pengajuan: Math.round(data[i].jumlah_pengajuan)
+                    if (data.length === 0) {
+                        $('#bar-chart-containerr').text('Tidak ada pengajuan');
+                    } else {
+                        var colors = ['#dc3545', '#FFC107', '#007BFF', '#01FF70', '#17A2B8'];
+                        var chartData = [];
+                        for (var i = 0; i < data.length; i++) {
+                            chartData.push({
+                                prodi: data[i].prodi,
+                                jumlah_pengajuan: Math.round(data[i].jumlah_pengajuan)
+                            });
+                        }
+                        new Morris.Bar({
+                            element: 'bar-chart-containerr',
+                            data: chartData,
+                            xkey: 'prodi',
+                            ykeys: ['jumlah_pengajuan'],
+                            labels: ['Jumlah Pengajuan'],
+                            barColors: function(row, series, type) {
+                                return colors[row.x];
+                            },
+                            hideHover: 'auto',
+                            resize: true,
+                            yLabelFormat: function(y) {
+                                return Math.round(y);
+                            },
                         });
                     }
-                    new Morris.Bar({
-                        element: 'bar-chart-containerr',
-                        data: chartData,
-                        xkey: 'prodi',
-                        ykeys: ['jumlah_pengajuan'],
-                        labels: ['Jumlah Pengajuan'],
-                        barColors: function(row, series, type) {
-                            return colors[row.x];
-                        },
-                        hideHover: 'auto',
-                        resize: true,
-                        yLabelFormat: function(y) {
-                            return Math.round(y);
-                        },
-                    });
                 },
                 error: function(xhr, textStatus, errorThrown) {
-                    console.log(xhr.responseText); 
+                    console.log(xhr.responseText);
                     // Tampilkan pesan jika tidak ada data yang diterima
                     $('#bar-chart-containerr').html('Tidak ada data yang tersedia.');
                 }

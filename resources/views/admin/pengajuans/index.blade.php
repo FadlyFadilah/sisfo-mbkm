@@ -1,14 +1,19 @@
 @extends('layouts.admin')
 @section('content')
-    @can('pengajuan_create')
-        <div style="margin-bottom: 10px;" class="row">
-            <div class="col-lg-12">
+    <div style="margin-bottom: 10px;" class="row">
+        @can('pengajuan_create')
+            <div class="col-lg-6">
                 <a class="btn btn-success" href="{{ route('admin.pengajuans.create') }}">
                     {{ trans('global.add') }} {{ trans('cruds.pengajuan.title_singular') }}
                 </a>
             </div>
+        @endcan
+        <div class="col-lg-6">
+            <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modal-default"><i
+                    class="fas fa-calendar"></i>
+                Filter Prodi, Tahun Periode dan Program</button>
         </div>
-    @endcan
+    </div>
     <div class="card">
         <div class="card-header">
             {{ trans('cruds.pengajuan.title_singular') }} {{ trans('global.list') }}
@@ -132,6 +137,54 @@
                 </table>
             </div>
         </div>
+    </div>
+    <div class="modal fade" id="modal-default">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Filter Prodi & Tahun Periode dan Program MBKM</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="{{ route('admin.mahasiswa.index') }}" method="post" required>
+                    @csrf
+                    <div class="modal-body">
+                        <label for="prodi">Prodi</label>
+                        <select class="form-control {{ $errors->has('prodi') ? 'is-invalid' : '' }}" name="prodi_id"
+                            id="prodi_id">
+                            @foreach ($prodis as $id => $entry)
+                                <option value="{{ $id }}" {{ old('prodi_id') == $id ? 'selected' : '' }}>
+                                    {{ $entry }}</option>
+                            @endforeach
+                        </select>
+                        <br>
+                        <label for="tahun_periode">Tahun Periode</label>
+                        <select class="form-control {{ $errors->has('periode') ? 'is-invalid' : '' }}" name="periode_id"
+                            id="periode_id">
+                            @foreach ($periodes as $id => $entry)
+                                <option value="{{ $id }}" {{ old('periode_id') == $id ? 'selected' : '' }}>
+                                    {{ $entry }}</option>
+                            @endforeach
+                        </select>
+                        <br>
+                        <label for="program">Program</label>
+                        <select class="form-control {{ $errors->has('program') ? 'is-invalid' : '' }}" name="program_id"
+                            id="program_id">
+                            @foreach ($programs as $id => $entry)
+                                <option value="{{ $id }}" {{ old('program_id') == $id ? 'selected' : '' }}>
+                                    {{ $entry }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <button type="submit" class="btn btn-flat btn-primary">Ubah prodi</button>
+                    </div>
+                </form>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
     </div>
 @endsection
 @section('scripts')

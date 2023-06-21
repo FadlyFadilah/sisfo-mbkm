@@ -36,10 +36,6 @@ class StoreMahasiswaRequest extends FormRequest
                 'required',
                 'date_format:' . config('panel.date_format'),
             ],
-            'periode_id' => [
-                'required',
-                'integer',
-            ],
         ];
     }
 }

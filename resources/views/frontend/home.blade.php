@@ -92,6 +92,8 @@
                 },
                 error: function(xhr, textStatus, errorThrown) {
                     console.log(xhr.responseText);
+                    // Tampilkan pesan jika tidak ada data yang diterima
+                    $('#chart-container').html('Tidak ada data yang tersedia.');
                 }
             });
         });

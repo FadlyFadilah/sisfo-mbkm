@@ -89,18 +89,6 @@
                                     <span
                                         class="help-block">{{ trans('cruds.mahasiswa.fields.tanggal_lahir_helper') }}</span>
                                 </div>
-                                <div class="form-group">
-                                    <label class="required" for="periode_id">{{ trans('cruds.mahasiswa.fields.periode') }}</label>
-                                    <select class="form-control select2 {{ $errors->has('periode') ? 'is-invalid' : '' }}" name="periode_id" id="periode_id" required>
-                                        @foreach($periodes as $id => $entry)
-                                            <option value="{{ $id }}" {{ old('periode_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
-                                        @endforeach
-                                    </select>
-                                    @if($errors->has('periode'))
-                                        <span class="text-danger">{{ $errors->first('periode') }}</span>
-                                    @endif
-                                    <span class="help-block">{{ trans('cruds.mahasiswa.fields.periode_helper') }}</span>
-                                </div>
                             @else
                                 <div class="form-group">
                                     <label class="required"
@@ -171,21 +159,6 @@
                                     @endif
                                     <span
                                         class="help-block">{{ trans('cruds.mahasiswa.fields.tanggal_lahir_helper') }}</span>
-                                </div>
-                                <div class="form-group">
-                                    <label class="required" for="periode_id">{{ trans('cruds.mahasiswa.fields.periode') }}</label>
-                                    <select class="form-control select2 {{ $errors->has('periode') ? 'is-invalid' : '' }}"
-                                        name="periode_id" id="periode_id" required>
-                                        @foreach ($periodes as $id => $entry)
-                                            <option value="{{ $id }}"
-                                                {{ (old('periode_id') ? old('periode_id') : $mahasiswa->periode->id ?? '') == $id ? 'selected' : '' }}>
-                                                {{ $entry }}</option>
-                                        @endforeach
-                                    </select>
-                                    @if ($errors->has('periode'))
-                                        <span class="text-danger">{{ $errors->first('periode') }}</span>
-                                    @endif
-                                    <span class="help-block">{{ trans('cruds.mahasiswa.fields.periode_helper') }}</span>
                                 </div>
                             @endif
                             <div class="form-group">

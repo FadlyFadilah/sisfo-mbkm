@@ -19,6 +19,11 @@ class Periode extends Model
         'deleted_at',
     ];
 
+    public const STATUS = [
+        'Aktif' => 'Aktif',
+        'Tidak Aktif' => 'Tidak Aktif',
+    ];
+
     protected $fillable = [
         'tahun_periode',
         'status',
