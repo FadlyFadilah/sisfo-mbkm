@@ -2,9 +2,10 @@
 @section('content')
 <div class="login-box">
     <div class="login-logo">
+        <img class="img-fluid" width="128px" src="{{ asset('LOGOTEDC.PNG') }}" alt="">
         <div class="login-logo">
             <a href="{{ route('admin.home') }}">
-                Sisfo MBKM Politeknik TEDC Bandung
+                Sistem Informasi MBKM Politeknik TEDC Bandung
             </a>
         </div>
     </div>

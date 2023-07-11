@@ -26,6 +26,9 @@
                                 {{ trans('cruds.laporan.fields.id') }}
                             </th>
                             <th>
+                                Nama Lengkap
+                            </th>
+                            <th>
                                 {{ trans('cruds.laporan.fields.pengajuan') }}
                             </th>
                             <th>
@@ -50,6 +53,9 @@
                                 </td>
                                 <td>
                                     {{ $no++ }}
+                                </td>
+                                <td>
+                                    {{ $laporan->pengajuan->mahasiswa->nama_lengkap ?? '' }}
                                 </td>
                                 <td>
                                     {{ $laporan->pengajuan->program->nama_program ?? '' }}

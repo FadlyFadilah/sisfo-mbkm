@@ -78,29 +78,31 @@
                                     {{ $pengajuan->verif ?? '' }}
                                 </td>
                                 <td>
-                                    <form id="verif-form-{{ $pengajuan->id }}"
-                                        action="{{ route('admin.pengajuans.verif', $pengajuan->id) }}" method="POST"
-                                        style="display: inline-block;">
-                                        <input type="hidden" name="_method" value="PATCH">
-                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                        <input type="hidden" name="verif" value="Verifikasi">
-                                        <button type="button" class="btn btn-xs btn-success"
-                                            onclick="pengajuanVerif({{ $pengajuan->id }})">
-                                            Verif
-                                        </button>
-                                    </form>
+                                    @can('pengajuan_edit')
+                                        <form id="verif-form-{{ $pengajuan->id }}"
+                                            action="{{ route('admin.pengajuans.verif', $pengajuan->id) }}" method="POST"
+                                            style="display: inline-block;">
+                                            <input type="hidden" name="_method" value="PATCH">
+                                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                            <input type="hidden" name="verif" value="Verifikasi">
+                                            <button type="button" class="btn btn-xs btn-success"
+                                                onclick="pengajuanVerif({{ $pengajuan->id }})">
+                                                Verif
+                                            </button>
+                                        </form>
 
-                                    <form id="tolak-form-{{ $pengajuan->id }}"
-                                        action="{{ route('admin.pengajuans.verif', $pengajuan->id) }}" method="POST"
-                                        style="display: inline-block;">
-                                        <input type="hidden" name="_method" value="PATCH">
-                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                        <input type="hidden" name="verif" value="Tolak">
-                                        <button type="button" class="btn btn-xs btn-warning"
-                                            onclick="pengajuanTolak({{ $pengajuan->id }})">
-                                            Tolak
-                                        </button>
-                                    </form>
+                                        <form id="tolak-form-{{ $pengajuan->id }}"
+                                            action="{{ route('admin.pengajuans.verif', $pengajuan->id) }}" method="POST"
+                                            style="display: inline-block;">
+                                            <input type="hidden" name="_method" value="PATCH">
+                                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                            <input type="hidden" name="verif" value="Tolak">
+                                            <button type="button" class="btn btn-xs btn-warning"
+                                                onclick="pengajuanTolak({{ $pengajuan->id }})">
+                                                Tolak
+                                            </button>
+                                        </form>
+                                    @endcan
 
                                     @can('pengajuan_show')
                                         <a class="btn btn-xs btn-primary"

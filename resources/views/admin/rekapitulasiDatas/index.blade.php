@@ -47,7 +47,7 @@
                                 @endforeach
                             </select>
                         </div>
-                        <span class="text-danger">langusung saja jika ingin mendownload tanpa filter apapun!</span>
+                        <span class="text-danger">langsung saja jika ingin mendownload tanpa filter apapun!</span>
 
                         <div class="modal-footer justify-content-between">
                             <button type="submit" class="btn btn-flat btn-primary">Download Exel</button>

@@ -26,7 +26,7 @@
                                     <!-- small box -->
                                     <div class="small-box {{ $randomColor }}">
                                         <div class="inner">
-                                            <h3>{{ $item->prodi_mahasiswas_count ?? '0' }}</h3>
+                                            <h3>{{ $item->mahasiswas_count ?? '0' }}</h3>
 
                                             <p>{{ $item->nama_prodi }}</p>
                                         </div>

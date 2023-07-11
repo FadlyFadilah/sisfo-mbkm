@@ -98,8 +98,8 @@ return [
         ],
     ],
     'program' => [
-        'title'          => 'Program',
-        'title_singular' => 'Program',
+        'title'          => 'Program MBKM',
+        'title_singular' => 'Program MBKM',
         'fields'         => [
             'id'                  => 'No',
             'id_helper'           => ' ',
