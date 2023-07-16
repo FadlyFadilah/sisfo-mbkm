@@ -55,10 +55,15 @@
                                         Contoh Format Laporan MBKM
                                     </div>
                                     <div class="chart-wrapper">
-                                        @if ($files->file_laporan)
-                                            <a class="ml-3" href="{{ $files->file_laporan->getUrl() }}" target="_blank">
-                                                Download Format Laporan
-                                            </a>
+                                        @if ($files === null)
+                                            Belum ada Dokumen format laporan MBKM
+                                        @else
+                                            @if ($files->file_laporan)
+                                                <a class="ml-3" href="{{ $files->file_laporan->getUrl() }}"
+                                                    target="_blank">
+                                                    Download Format Laporan
+                                                </a>
+                                            @endif
                                         @endif
                                     </div>
                                 </div>

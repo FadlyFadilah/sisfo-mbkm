@@ -63,30 +63,58 @@
                                     </div>
                                     <div class="chart-wrapper">
                                         @can('file_edit')
-                                            <form method="POST" action="{{ route('admin.files.update', [$files->id]) }}"
-                                                enctype="multipart/form-data">
-                                                @method('PUT')
-                                                @csrf
-                                                <div class="form-group">
-                                                    <label for="file_laporan">Format Laporan</label>
-                                                    <div class="needsclick dropzone {{ $errors->has('file_laporan') ? 'is-invalid' : '' }}"
-                                                        id="file_laporan-dropzone">
+                                            @if ($files === null)
+                                                <form method="POST" action="{{ route('admin.files.store') }}"
+                                                    enctype="multipart/form-data">
+                                                    @csrf
+                                                    <div class="form-group">
+                                                        <label for="file_laporan">Format Laporan</label>
+                                                        <div class="needsclick dropzone {{ $errors->has('file_laporan') ? 'is-invalid' : '' }}"
+                                                            id="file_laporan-dropzone">
+                                                        </div>
+                                                        @if ($errors->has('file_laporan'))
+                                                            <span
+                                                                class="text-danger">{{ $errors->first('file_laporan') }}</span>
+                                                        @endif
                                                     </div>
-                                                    @if ($errors->has('file_laporan'))
-                                                        <span class="text-danger">{{ $errors->first('file_laporan') }}</span>
-                                                    @endif
-                                                </div>
-                                                <div class="form-group">
-                                                    <button class="btn btn-danger" type="submit">
-                                                        {{ trans('global.save') }}
-                                                    </button>
-                                                </div>
-                                            </form>
+                                                    <div class="form-group">
+                                                        <button class="btn btn-danger" type="submit">
+                                                            {{ trans('global.save') }}
+                                                        </button>
+                                                    </div>
+                                                </form>
+                                            @else
+                                                <form method="POST" action="{{ route('admin.files.update', [$files->id]) }}"
+                                                    enctype="multipart/form-data">
+                                                    @method('PUT')
+                                                    @csrf
+                                                    <div class="form-group">
+                                                        <label for="file_laporan">Format Laporan</label>
+                                                        <div class="needsclick dropzone {{ $errors->has('file_laporan') ? 'is-invalid' : '' }}"
+                                                            id="file_laporan-dropzone">
+                                                        </div>
+                                                        @if ($errors->has('file_laporan'))
+                                                            <span
+                                                                class="text-danger">{{ $errors->first('file_laporan') }}</span>
+                                                        @endif
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <button class="btn btn-danger" type="submit">
+                                                            {{ trans('global.save') }}
+                                                        </button>
+                                                    </div>
+                                                </form>
+                                            @endif
                                         @endcan
+                                        @if ($files === null)
+                                            Belum ada dokumen format laporan mbkm
+                                        @else
+                                            
                                         @if ($files->file_laporan)
                                             <a href="{{ $files->file_laporan->getUrl() }}" target="_blank">
                                                 Download Format Laporan
                                             </a>
+                                        @endif
                                         @endif
                                     </div>
                                 </div>
