@@ -23,7 +23,7 @@
                                 <thead>
                                     <tr>
                                         <th>
-                                            {{ trans('cruds.laporan.fields.id') }}
+                                            NO
                                         </th>
                                         <th>
                                             {{ trans('cruds.laporan.fields.pengajuan') }}
