@@ -82,16 +82,13 @@
                                         class="help-block">{{ trans('cruds.mahasiswa.fields.jenis_kelamin_helper') }}</span>
                                 </div>
                                 <div class="form-group">
-                                    <label for="tanggal_lahir">{{ trans('cruds.mahasiswa.fields.tanggal_lahir') }}</label>
-                                    <input class="form-control date" type="text" name="tanggal_lahir" id="tanggal_lahir"
-                                        value="{{ old('tanggal_lahir') }}">
+                                    <label class="required" for="tanggal_lahir">{{ trans('cruds.mahasiswa.fields.tanggal_lahir') }}</label>
+                                    <input class="form-control {{ $errors->has('tanggal_lahir') ? 'is-invalid' : '' }}" type="text"
+                                        name="tanggal_lahir" id="tanggal_lahir" value="{{ old('tanggal_lahir') }}" required>
                                     @if ($errors->has('tanggal_lahir'))
-                                        <div class="invalid-feedback">
-                                            {{ $errors->first('tanggal_lahir') }}
-                                        </div>
+                                        <span class="text-danger">{{ $errors->first('tanggal_lahir') }}</span>
                                     @endif
-                                    <span
-                                        class="help-block">{{ trans('cruds.mahasiswa.fields.tanggal_lahir_helper') }}</span>
+                                    <span class="help-block">{{ trans('cruds.mahasiswa.fields.tanggal_lahir_helper') }}</span>
                                 </div>
                                 <div class="form-group">
                                     <label class="required"
@@ -171,16 +168,12 @@
                                         class="help-block">{{ trans('cruds.mahasiswa.fields.jenis_kelamin_helper') }}</span>
                                 </div>
                                 <div class="form-group">
-                                    <label for="tanggal_lahir">{{ trans('cruds.mahasiswa.fields.tanggal_lahir') }}</label>
-                                    <input class="form-control date" type="text" name="tanggal_lahir"
-                                        id="tanggal_lahir" value="{{ old('tanggal_lahir', $mahasiswa->tanggal_lahir) }}">
-                                    @if ($errors->has('tanggal_lahir'))
-                                        <div class="invalid-feedback">
-                                            {{ $errors->first('tanggal_lahir') }}
-                                        </div>
+                                    <label class="required" for="tanggal_lahir">{{ trans('cruds.mahasiswa.fields.tanggal_lahir') }}</label>
+                                    <input class="form-control datepicker {{ $errors->has('tanggal_lahir') ? 'is-invalid' : '' }}" type="text" name="tanggal_lahir" id="tanggal_lahir" value="{{ old('tanggal_lahir', $mahasiswa->tanggal_lahir) }}" required>
+                                    @if($errors->has('tanggal_lahir'))
+                                        <span class="text-danger">{{ $errors->first('tanggal_lahir') }}</span>
                                     @endif
-                                    <span
-                                        class="help-block">{{ trans('cruds.mahasiswa.fields.tanggal_lahir_helper') }}</span>
+                                    <span class="help-block">{{ trans('cruds.mahasiswa.fields.tanggal_lahir_helper') }}</span>
                                 </div>
                                 <div class="form-group">
                                     <label class="required"
@@ -213,4 +206,47 @@
 @endsection
 @section('scripts')
     @parent
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+    <script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+
+
+    <script>
+        $(document).ready(function() {
+            $('#tanggal_lahir').daterangepicker({
+                singleDatePicker: true,
+                showDropdowns: true,
+                minYear: 1900, // Tahun minimum yang diizinkan
+                maxYear: parseInt(moment().format('YYYY'),
+                    10), // Tahun maksimum yang diizinkan, di sini diatur sebagai tahun saat ini
+                locale: {
+                    format: 'YYYY-MM-DD', // Format tanggal yang diharapkan
+                    separator: ' - ',
+                    applyLabel: 'Pilih',
+                    cancelLabel: 'Batal',
+                    fromLabel: 'Dari',
+                    toLabel: 'Hingga',
+                    customRangeLabel: 'Custom',
+                    weekLabel: 'W',
+                    daysOfWeek: ['Mg', 'Sn', 'Sl', 'Rb', 'Km', 'Jm', 'Sa'],
+                    monthNames: [
+                        'Januari',
+                        'Februari',
+                        'Maret',
+                        'April',
+                        'Mei',
+                        'Juni',
+                        'Juli',
+                        'Agustus',
+                        'September',
+                        'Oktober',
+                        'November',
+                        'Desember'
+                    ],
+                    firstDay: 1
+                }
+            });
+        });
+    </script>
 @endsection
