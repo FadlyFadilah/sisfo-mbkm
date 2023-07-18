@@ -88,7 +88,7 @@
                                     @if ($errors->has('tanggal_lahir'))
                                         <span class="text-danger">{{ $errors->first('tanggal_lahir') }}</span>
                                     @endif
-                                    <span class="help-block">{{ trans('cruds.mahasiswa.fields.tanggal_lahir_helper') }}</span>
+                                    <span class="help-block text-danger">{{ trans('cruds.mahasiswa.fields.tanggal_lahir_helper') }}</span>
                                 </div>
                                 <div class="form-group">
                                     <label class="required"
@@ -173,7 +173,7 @@
                                     @if($errors->has('tanggal_lahir'))
                                         <span class="text-danger">{{ $errors->first('tanggal_lahir') }}</span>
                                     @endif
-                                    <span class="help-block">{{ trans('cruds.mahasiswa.fields.tanggal_lahir_helper') }}</span>
+                                    <span class="help-block text-danger">{{ trans('cruds.mahasiswa.fields.tanggal_lahir_helper') }}</span>
                                 </div>
                                 <div class="form-group">
                                     <label class="required"

@@ -25,7 +25,7 @@
                                     {{ $errors->first('pengajuan') }}
                                 </div>
                             @endif
-                            <span class="help-block">{{ trans('cruds.laporan.fields.pengajuan_helper') }}</span>
+                            <span class="help-block text-danger">{{ trans('cruds.laporan.fields.pengajuan_helper') }}</span>
                         </div>
                         <div class="form-group">
                             <label class="required" for="sertifikat">{{ trans('cruds.laporan.fields.sertifikat') }}</label>
@@ -36,7 +36,7 @@
                                     {{ $errors->first('sertifikat') }}
                                 </div>
                             @endif
-                            <span class="help-block">{{ trans('cruds.laporan.fields.sertifikat_helper') }}</span>
+                            <span class="help-block text-danger">{{ trans('cruds.laporan.fields.sertifikat_helper') }}</span>
                         </div>
                         <div class="form-group">
                             <label class="required" for="laporan">{{ trans('cruds.laporan.fields.laporan') }}</label>
@@ -47,7 +47,7 @@
                                     {{ $errors->first('laporan') }}
                                 </div>
                             @endif
-                            <span class="help-block">{{ trans('cruds.laporan.fields.laporan_helper') }}</span>
+                            <span class="help-block text-danger">{{ trans('cruds.laporan.fields.laporan_helper') }}</span>
                         </div>
                         <div class="form-group">
                             <button class="btn btn-danger" type="submit">
