@@ -78,6 +78,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     // Rekapitulasi Data
     Route::resource('rekapitulasi-datas', 'RekapitulasiDataController');
     Route::post('export/full', [RekapitulasiDataController::class, 'export'])->name('export.full');
+
+    Route::post('files/media', 'FileController@storeMedia')->name('files.storeMedia');
+    Route::post('files/ckmedia', 'FileController@storeCKEditorImages')->name('files.storeCKEditorImages');
+    Route::resource('files', 'FileController');
 });
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth']], function () {
     // Change password
@@ -96,7 +100,8 @@ Route::group(['as' => 'frontend.', 'namespace' => 'Frontend', 'middleware' => ['
     Route::post('profile/destroy', 'ChangePasswordUserController@destroy')->name('password.destroyProfile');
     Route::get('/home', 'HomeController@index')->name('home');
     Route::get('/chart', 'HomeController@Chart');
-    // Route::get('/chartbar', 'HomeController@chartbar');
+    Route::get('/chartbar', 'HomeController@chartbar');
+    Route::get('/chartbarprodi', 'HomeController@chartMahasiswaByProdi');
 
     // Mahasiswa
     Route::resource('mahasiswas', 'MahasiswaController');

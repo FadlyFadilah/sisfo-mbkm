@@ -66,7 +66,7 @@ class User extends Authenticatable
 
     public function userMahasiswas()
     {
-        return $this->hasMany(Mahasiswa::class, 'user_id', 'id');
+        return $this->hasOne(Mahasiswa::class, 'user_id', 'id');
     }
 
     public function setPasswordAttribute($input)

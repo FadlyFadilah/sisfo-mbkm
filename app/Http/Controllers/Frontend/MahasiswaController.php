@@ -20,14 +20,13 @@ class MahasiswaController extends Controller
         
         $prodis = Prodi::pluck('nama_prodi', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $periodes = Periode::pluck('tahun_periode', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $periodes = Periode::where('status', 'aktif')->pluck('tahun_periode', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         return view('frontend.mahasiswas.index', compact('mahasiswa', 'periodes', 'prodis'));
     }
 
     public function store(StoreMahasiswaRequest $request)
     {
-        $periode = Periode::where('status', 'Aktif')->first();
         $mahasiswa = Mahasiswa::updateOrCreate([
             'user_id'   => auth()->user()->id,
         ], [
@@ -36,7 +35,7 @@ class MahasiswaController extends Controller
             'jenis_kelamin'   => $request->get('jenis_kelamin'),
             'tanggal_lahir'   => $request->get('tanggal_lahir'),
             'prodi_id'    => $request->get("prodi_id"),
-            'periode_id'    => $periode->id,
+            'periode_id'    => $request->get("periode_id"),
         ]);
 
         return redirect()->route('frontend.mahasiswas.index')->with('success', 'Berhasil Mengupdate');

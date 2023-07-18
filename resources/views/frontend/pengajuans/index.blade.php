@@ -23,7 +23,7 @@
                                 <thead>
                                     <tr>
                                         <th>
-                                            {{ trans('cruds.pengajuan.fields.id') }}
+                                            No
                                         </th>
                                         <th>
                                             {{ trans('cruds.pengajuan.fields.mahasiswa') }}

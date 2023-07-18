@@ -20,14 +20,6 @@
                             <tbody>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.pengajuan.fields.id') }}
-                                    </th>
-                                    <td>
-                                        {{ $pengajuan->id }}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>
                                         {{ trans('cruds.pengajuan.fields.mahasiswa') }}
                                     </th>
                                     <td>
