@@ -35,7 +35,7 @@
                                     {{ $errors->first('semester') }}
                                 </div>
                             @endif
-                            <span class="help-block">{{ trans('cruds.pengajuan.fields.semester_helper') }}</span>
+                            <span class="help-block text-danger">{{ trans('cruds.pengajuan.fields.semester_helper') }}</span>
                         </div>
                         <div class="form-group">
                             <label for="no_hp">{{ trans('cruds.pengajuan.fields.no_hp') }}</label>

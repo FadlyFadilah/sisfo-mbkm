@@ -26,6 +26,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.css" rel="stylesheet" />
     <link href="{{ asset('css/custom.css') }}" rel="stylesheet" />
     <script src="{{ asset('js/sweetalert.js') }}"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 
     @yield('styles')
 </head>
@@ -122,6 +123,8 @@
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.js"></script>
     <script src="{{ asset('js/main.js') }}"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
     <script>
         $(function() {
             let selectAllButtonTrans = '{{ trans('global.select_all') }}'
@@ -155,30 +158,6 @@
                 scrollX: true,
                 pageLength: 100,
                 dom: 'lBfrtip<"actions">',
-                buttons: [{
-                        extend: 'selectAll',
-                        className: 'btn-primary',
-                        text: selectAllButtonTrans,
-                        exportOptions: {
-                            columns: ':visible'
-                        },
-                        action: function(e, dt) {
-                            e.preventDefault()
-                            dt.rows().deselect();
-                            dt.rows({
-                                search: 'applied'
-                            }).select();
-                        }
-                    },
-                    {
-                        extend: 'selectNone',
-                        className: 'btn-primary',
-                        text: selectNoneButtonTrans,
-                        exportOptions: {
-                            columns: ':visible'
-                        }
-                    }
-                ]
             });
 
             $.fn.dataTable.ext.classes.sPageButton = '';
