@@ -23,9 +23,9 @@
                 <td>
                     {{ $no++ }}
                 </td>
-                <td>{{ $t->nama_lengkap }}</td>
-                <td>{{ $t->nim }}</td>
-                <td>{{ $t->prodi->nama_prodi }}</td>
+                <td>{{ $t->nama_lengkap ?? '' }}</td>
+                <td>{{ $t->nim ?? '' }}</td>
+                <td>{{ $t->prodi->nama_prodi ?? '' }}</td>
                 <td>
                     @foreach ($t->mahasiswaPengajuans as $pengajuan)
                         {{ $pengajuan->program->nama_program }},
