@@ -49,6 +49,7 @@ class HomeController
             ->whereHas('mahasiswa.periode', function ($query) {
                 $query->where('status', 'Aktif');
             })
+            ->whereNot('verif', 'tolak')
             ->groupBy('programs.nama_program')
             ->selectRaw('programs.nama_program, COUNT(*) as count')
             ->orderBy('count', 'desc')
@@ -65,6 +66,7 @@ class HomeController
             ->whereHas('mahasiswa.periode', function ($query) {
                 $query->where('status', 'Aktif');
             })
+            ->whereNot('verif', 'tolak')
             ->groupBy('prodis.nama_prodi')
             ->get();
 
