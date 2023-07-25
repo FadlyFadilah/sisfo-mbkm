@@ -15,7 +15,7 @@ class HomeController
         $programs = Program::withCount(['programPengajuans' => function ($query) {
             $query->whereHas('mahasiswa.periode', function ($query) {
                 $query->where('status', 'Aktif');
-            });
+            })->whereNot('verif', 'tolak');
         }])->get();
         $files = File::with(['media'])->first();
 
